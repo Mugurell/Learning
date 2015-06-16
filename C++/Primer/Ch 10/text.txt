@@ -1,0 +1,3 @@
+When we create a stream iterator,
+we must specify the type of objects
+that the iterator will read or write.

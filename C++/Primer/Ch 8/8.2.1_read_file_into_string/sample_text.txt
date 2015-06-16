@@ -1,0 +1,9 @@
+** This is a sample text **
+
+The condition of a switch statement is a value. The case says that if it has the value of whatever is after that case then
+do whatever follows the colon. The break is used to break out of the case statements. Break is a keyword that breaks out of
+the code block, usually surrounded by braces, which it is in. In this case, break prevents the program from falling through
+and executing the code in all the other case statements. An important thing to note about the switch statement is that the
+case values may only be constant integral expressions. Sadly, it isn't legal to use case like this:
+
+** End of the sample text **

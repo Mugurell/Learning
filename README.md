@@ -1,6 +1,8 @@
 # Learning
 ### Exercises I've done on the road to becoming a programmer
 
+
+
 Hi there!
 
 Guess you've guessed my name is Mugurel.

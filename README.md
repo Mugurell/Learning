@@ -1,5 +1,5 @@
 # Learning
-Exercises I've done on the road to becoming a programmer
+### Exercises I've done on the road to becoming a programmer
 
 Hi there!
 

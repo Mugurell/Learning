@@ -18,4 +18,7 @@ All in all, I am proud of them.
 
 Maybe if you're also a beginner this can be helpful in some way?
 
+### You'll find here exercises from:
+- [C All-in-One Desk Reference For Dummies Paperback – September 3, 2004 by Dan Gookin] (http://www.amazon.com/All-One-Desk-Reference-Dummies/dp/0764570692/)
+
 

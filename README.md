@@ -19,9 +19,9 @@ All in all, I am proud of them.
 Maybe if you're also a beginner this can be helpful in some way?
 
 ### You'll find here exercises from:
-- C All-in-One Desk Reference For Dummies Paperback – September 3, 2004 by Dan Gookin - [Amazon] (http://www.amazon.com/All-One-Desk-Reference-Dummies/dp/0764570692)
-- Pointers on C Paperback – August 4, 1997 by Kenneth Reek - [Amazon] (http://www.amazon.com/Pointers-C-Kenneth-Reek/dp/0673999866)
-- C++ Primer (5th Edition) Paperback – August 16, 2012
+- C All-in-One Desk Reference For Dummies – September 3, 2004 by Dan Gookin - [Amazon] (http://www.amazon.com/All-One-Desk-Reference-Dummies/dp/0764570692)
+- Pointers on C – August 4, 1997 by Kenneth Reek - [Amazon] (http://www.amazon.com/Pointers-C-Kenneth-Reek/dp/0673999866)
+- C++ Primer (5th Edition) – August 16, 2012
     by Stanley B. Lippman, Josée Lajoie, Barbara E. Moo - [Amazon] (http://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113)
 - Many other exercises done just to understand better the concepts,
 or just for fun :-)

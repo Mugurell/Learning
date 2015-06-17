@@ -5,8 +5,11 @@
  *  Written:          29.05.2015 19:53
  *  Last updated:     01.06.2015 12:02
  *
- *  Compilation:  g++ -std=c++11 -Wall -Werror -Wextra -pedantic 
- *	 (g++ 5.1)		    
+ *  Compilation:  g++ -std=c++11 -Wall -Werror -Wextra -pedantic -Wshadow
+ *	 (g++ 5.1)		  -Woverloaded-virtual -Winvalid-pch -Wcast-align
+ *					  -Wformat=2 -Wformat-nonliteral -Wmissing-declarations
+ *					  -Wmissing-format-attribute -Wmissing-include-dirs
+ *					  -Wredundant-decls -Wswitch-default -Wswitch-enum
  *
  *  Execution:    ./...
  *

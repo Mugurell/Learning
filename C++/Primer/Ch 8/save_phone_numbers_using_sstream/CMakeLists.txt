@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(8_3_save_phone_numbers_using_sstream)
+project(save_phone_numbers_using_sstream)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 

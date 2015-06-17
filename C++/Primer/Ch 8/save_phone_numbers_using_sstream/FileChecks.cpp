@@ -105,7 +105,7 @@ valid_output(int argc, char **argv, const std::string &inputFName,
            std::ofstream &output_file, std::string &outputFName) {
 	bool valid_choice = false;
 	do {
-		std::cout << "\nPlease select output txt file:\n"
+		std::cout << "\n\n\nPlease select output txt file:\n"
 		<< "\t1) - Use the first argument given to this program;\n"
 		<< "\t2) - Use the second argument given to this program;\n"
 		<< "\t3) - Use a default location - \"contacts_formatted.txt\" "
@@ -117,25 +117,35 @@ valid_output(int argc, char **argv, const std::string &inputFName,
 		std::cin >> choice;
 		switch (choice) {
 			case 1: // first check the # of arguments passed to the program
-				if (argc == 1) {
+				if (argc == 1)
 					std::cerr << "\tError: No arguments were passed to the "
-					<< "program\n" << std::endl;
-				} else if (argc >= 2) {
-                    if (inputFName == argv[1] && argc == 2) {
+					<< "program" << std::endl;
+				else if (argc >= 2) {
+                    if (inputFName == argv[1] && argc == 2)
                         std::cerr << "\tOnly one argument was passed to the "
-                                  << "program which is used as input file.\n\n";
-                    } else if (inputFName == argv[1]) {
+                                  << "program which is used as input file."
+                                  << std::endl;
+                    else if (inputFName == argv[1])
                         std::cerr << "\tError: " << *(argv + 1) << " allready"
-                                  << " selected to be used as input file.\n\n";
-                    } else {
+                                  << " selected to be used as input file."
+                                  << std::endl;
+                    else {
 						outputFName = argv[1];
 						valid_choice = true;
 					}
 				}
 		        break;
 			case 2:
-				outputFName = argv[2];
-		        valid_choice = true;
+				if (argc == 1)
+                    std::cerr << "\tError: No arguments were passes to the "
+                                 "program" << std::endl;
+                else if (argc == 2)
+                    std::cerr << "\tError: Only one argument was passed to "
+                                 "the program!" << std::endl;
+                else {
+                    outputFName = argv[2];
+                    valid_choice = true;
+                }
 		        break;
 			case 3:
 				outputFName = "contacts_formatted.txt";
@@ -155,7 +165,7 @@ valid_output(int argc, char **argv, const std::string &inputFName,
 				std::cout << "\n\tBBye!\n" << std::endl;
 		        return false;
 			default:
-				std::cerr << "\tError: No valid input.\n" << std::endl;
+				std::cerr << "\tError: No valid input." << std::endl;
 		        clear_cin();
 		        break;
 		}
@@ -166,5 +176,3 @@ valid_output(int argc, char **argv, const std::string &inputFName,
 
 	return valid_choice;
 }
-
-

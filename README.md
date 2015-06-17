@@ -23,7 +23,7 @@ Maybe if you're also a beginner this can be helpful in some way?
 - Pointers on C – August 4, 1997 by Kenneth Reek - [Amazon] (http://www.amazon.com/Pointers-C-Kenneth-Reek/dp/0673999866)
 - C++ Primer (5th Edition) – August 16, 2012
     by Stanley B. Lippman, Josée Lajoie, Barbara E. Moo - [Amazon] (http://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113)
-- Many other exercises done just to understand better the concepts,
+- Many other exercises done just to better understand some concepts,
 or just for fun :-)
 
 

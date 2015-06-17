@@ -9,6 +9,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
     -Wmissing-declarations -Wmissing-format-attribute -Wmissing-include-dirs \
     -Wredundant-decls -Wswitch-default -Wswitch-enum")
 
-set(SOURCE_FILES FileChecks.cpp PersonInfo.cpp main.cpp)
+set(SOURCE_FILES main.cpp PersonInfo.cpp FileChecks.cpp)
 
 add_executable(read_format_save_contacts ${SOURCE_FILES})

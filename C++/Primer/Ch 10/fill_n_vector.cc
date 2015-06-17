@@ -60,7 +60,8 @@ int main()
 	// back_inserter() will call vector::push_back(), but 
 	// on an inserter, not on an iterator, hence, we'll be able
 	// to create new elements in the vector
-	std::fill_n(std::back_inserter(int_vector), 10, 0);
+	int x = 0;
+	std::fill_n(std::back_inserter(int_vector), 10, ++x);
 
 	for (short nr : int_vector)
 		std::cout << nr << ' ';

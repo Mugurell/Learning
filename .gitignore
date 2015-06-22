@@ -118,4 +118,6 @@ Thumbs.db
 **.7zip
 
 
-**/Ch zz - Sources
+
+#Ignore stupid .fuse_hidden files on Linux
+.fuse*

@@ -30,9 +30,9 @@
 **  (set::iterator will always get us a const iterator for a const value
 **      <=> KEYS IN A SET ARE READ-ONLY !!!! )
 **
-**  Also to be remembered: of we want to insert into a new map, we must
+**  Also to be remembered: if we want to insert into a new map, we must
 **  remember that the element type is a pair(const key, object). 
-**  For ex: map.insert(male.pair(key, object));
+**  For ex: map.insert(make.pair(key, object));
 **
 **  Scott Meyer recommends using emplace, so that's what I used.
 **

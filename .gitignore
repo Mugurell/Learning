@@ -83,6 +83,7 @@ bin/
 *.class
 
 # built native files
+*.out
 *.o
 *.so
 
@@ -119,7 +120,7 @@ Thumbs.db
 
 
 #Ignore Barbara's files
-#Ch zz  - Sources
+Ch zz  - Sources
 
 
 #Ignore stupid .fuse_hidden files on Linux

@@ -1,0 +1,14 @@
+//
+// Created by Lingurar Petru-Mugurel on 30.06.2015.
+//
+
+#ifndef READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H
+#define READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H
+
+
+class FileOperations {
+
+};
+
+
+#endif //READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H

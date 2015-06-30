@@ -57,7 +57,7 @@ class StrBlobPtr;
 class StrBlob {
     friend class StrBlobPtr;
 public:
-    typedef std::vector<std::string>>::size_type size_type;
+    typedef std::vector<std::string>::size_type size_type;
     StrBlob();
     StrBlob(std::initializer_list<std::string> il);
     

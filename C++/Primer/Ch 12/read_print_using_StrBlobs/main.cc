@@ -22,11 +22,15 @@
  *
  *  Bugs:
  *  --- None ---
+ *   Whew!
  *
  *  TODO:
  *  --- None ---
  *
  *  Notes:
+ *  There's a txt file in the current folder - random_text_file.txt.
+ *  It can be used as an  input file. ;-)
+ *
  *  The most complicated way to read and print a file.
  *  But nothing's stopping me!
  *

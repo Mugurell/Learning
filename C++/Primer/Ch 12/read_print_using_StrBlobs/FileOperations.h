@@ -6,9 +6,14 @@
 #define READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H
 
 
-class FileOperations {
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
 
-};
 
+std::ifstream getInputFile(void);
+bool isValid(std::ifstream);
+void printInputFile(std::ifstream);
 
 #endif //READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H

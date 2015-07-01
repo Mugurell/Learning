@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          30 Jun 2015, 17:48
- *  Last updated:           ---
+ *  Last updated:     01 Jul 2015, 18:08 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -64,19 +64,23 @@
 // StringBlobPtr throws an exception on attempts to access non-existed elements
 class StringBlobPtr {
 public:
-	StringBlobPtr();
-	StringBlobPtr(StringBlob &stringRead, size_t size = 0);
+    StringBlobPtr();
+    StringBlobPtr(StringBlob &stringRead, size_t size = 0);
 
-	std::string& getCurrentWord() const;
-	StringBlobPtr& incrementWordPointer();      // prefix version
+    std::string& getCurrentWord() const;
+    StringBlobPtr& incrementWordPointer();      // prefix version
+
+    // current position within the array.
+    // declared as public because I use it outside. Sorry!
+    std::size_t iCurrentWord;
 private:
-	// testValidity returns a shared_ptr to the vector if the check succeeds
-	std::shared_ptr<std::vector<std::string>>
-		testValidity(std::size_t, const std::string&) const;
+    // store a weak_ptr which means the underlying vector might be destroyed
+    std::weak_ptr<std::vector<std::string>> wordPtr;
 
-	// store a weak_ptr which means the underlying vector might be destroyed
-	std::weak_ptr<std::vector<std::string>> wordPtr;
-	std::size_t iCurrentWord;       // current position within the array
+    // testValidity returns a shared_ptr to the vector if the check succeeds
+    std::shared_ptr<std::vector<std::string>>
+        testValidity(std::size_t, const std::string&) const;
+
 };
 
 

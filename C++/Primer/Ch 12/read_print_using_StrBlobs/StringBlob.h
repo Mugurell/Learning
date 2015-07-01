@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          30 Jun 2015, 14:32
- *  Last updated:           ---
+ *  Last updated:     01 Jul 2015, 18:08 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -50,27 +50,27 @@ class StringBlobPtr;
 
 class StringBlob {
 public:
-	friend class StringBlobPtr;
-	using SizeType = std::vector<std::string>::size_type;
-	StringBlob();
-	StringBlob(std::initializer_list<std::string> il);
+    friend class StringBlobPtr;
+    using SizeType = std::vector<std::string>::size_type;
+    StringBlob();
+    StringBlob(std::initializer_list<std::string> il);
 
-	SizeType size() const;
-	bool isEmpty() const;
-	void pushBack(const std::string &temp);
-	void popBack();
-	StringBlobPtr begin();
-	StringBlobPtr end();
-	// element access
-	std::string& getFirstWord();
-	const std::string& getFirstWord() const;
-	std::string& getLastWord();
-	const std::string& getLastWord() const;
+    SizeType size() const;
+    bool isEmpty() const;
+    void pushBack(const std::string &temp);
+    void popBack();
+    StringBlobPtr begin();
+    StringBlobPtr end();
+    // element access
+    std::string& getFirstWord();
+    const std::string& getFirstWord() const;
+    std::string& getLastWord();
+    const std::string& getLastWord() const;
 private:
-	std::shared_ptr<std::vector<std::string>> data;
+    std::shared_ptr<std::vector<std::string>> data;
 
-	// throw 'errorMessage' if data isn't valid
-	void testValidity(SizeType, const std::string&) const;
+    // throw 'errorMessage' if data isn't valid
+    void testValidity(SizeType, const std::string&) const;
 };
 
 

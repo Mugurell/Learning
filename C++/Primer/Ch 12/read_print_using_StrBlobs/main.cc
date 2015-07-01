@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          30 Jun 2015, 14:16
- *  Last updated:           ---
+ *  Last updated:     01 Jul 2015, 18:07
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -26,12 +26,9 @@
  *  TODO:
  *  --- None ---
  *
- *  Expected result:
- *  --- You can write here the execution command & the expected result ---
- *
  *  Notes:
- *  --- Anything that stands out ---
- *  --- Or needs to be treated with special attention ---
+ *  The most complicated way to read and print a file.
+ *  But nothing's stopping me!
  *
 *******************************************************************************
 ******************************************************************************/
@@ -45,13 +42,23 @@
 
 int main()
 {
-	std::ifstream inputFile = getInputFile();
-	isValid(inputFile);
-	StringBlob inputFileText = readInputFile(inputFile);
+    // Ask the user for a input file name stored on disk.
+    std::string inputFileName = getInputFileName();
 
-	std::cout << printInputFile(inputFileText, std::cout);
+    // Try to open the file with that name and see if it contains any
+    // characters.
+    if (isValid(inputFileName)) {
+        // If the file can be opened and is not empty, read that file line by
+        // line into a StringBlob object (shared_ptr of a vector of strings
+        // and then print that object using StringBlobPtr functions.
+        StringBlob fileContent = read(inputFileName);
+        std::cout << "\n\n";
+        printInputFile(fileContent, std::cout);
+    }
+    else
+        std::cout << "\nUnfortunatelly the entered filename isn't valid!\n";
 
-	std::cout << "\n\nPretty cool, huh\n" << std::endl;
+    std::cout << "\n\nPretty cool, huh\n" << std::endl;
 
-	return 0;
+    return 0;
 }

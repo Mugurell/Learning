@@ -14,9 +14,9 @@
 #include "StringBlob.h"
 
 
-std::ifstream getInputFile(void);
-bool isValid(std::ifstream);
-const StringBlob& readInputFile(std::ifstream);
-std::ostream& printInputFile(const StringBlob&, std::ostream&);
+std::string getInputFileName(void);
+bool isValid(std::string inputFileName);
+StringBlob read(std::string inputFileName);
+std::ostream& printInputFile(StringBlob&, std::ostream&);
 
 #endif //READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H

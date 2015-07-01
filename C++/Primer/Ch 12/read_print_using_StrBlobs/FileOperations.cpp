@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          30 Jun 2015, 22:21
- *  Last updated:           ---
+ *  Last updated:     01 Jul 2015, 18:07 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -14,20 +14,21 @@
  *  Execution:    ./...
  *
  *  Description:
- *  --- This is a description of what the program does ---
+ *  Implementation file for FileOperations.h.
  *
  *  Bugs:
  *  --- None ---
  *
  *  TODO:
- *  Check where the break sends in isValid()
- *
- *  Expected result:
- *  --- You can write here the execution command & the expected result ---
+ *  --- None ---
  *
  *  Notes:
- *  --- Anything that stands out ---
- *  --- Or needs to be treated with special attention ---
+ *  Showstopper bug in read() in line 'inputFileText.pushBack(eachWord).
+ *  Seems like I get a segmentation fault because the shared_ptr (member of
+ *  inputFileText - StringBlobPtr) hasn't allocated enough space for the vector
+ *  to grow.
+ *  strikeout ATM don't know how to resolve this. /strikeout
+ *  Resolved in StringBlob.cpp !!!
  *
 *******************************************************************************
 ******************************************************************************/
@@ -43,56 +44,57 @@
  * Ask for an input file.
  * Return an ifstream initialized with that file name.
  */
-std::ifstream
-getInputFile() {
-	std::cout << "\nPlease enter the name of an input file:\n\t->";
-	std::string inputFileName;
-	std::cin >> inputFileName;
+std::string getInputFileName(void) {
+    std::cout << "\nPlease enter the name of an input file:\n\t-> ";
+    std::string inputFileName;
+    std::cin >> inputFileName;
 
-	return std::ifstream(inputFileName);
+    return inputFileName;
 }
+
 
 /*
  * Check if the file can be opened and if it contains any printable character.
  * Return a bool which will be used in main.
  */
 bool
-isValid(std::ifstream inputFile) {
-	bool validity = false;
-	if (inputFile) {
-		std::string buffer;
-		std::getline(inputFile, buffer);
-		for (const auto & eachCharacter : buffer) {
-			// 33 should be the first nonwhitespace char and 126 the last
-			if (eachCharacter >= 33 && eachCharacter <= 126) {
-				validity = true;
-				break;
-			}
-		}
-	}
+isValid(std::string inputFileName) {
+    std::ifstream inputFile(inputFileName, std::ifstream::in);
+    bool validity = false;
+    if (inputFile) {
+        std::string buffer;
+        std::getline(inputFile, buffer);
+        for (const auto & eachCharacter : buffer) {
+            // 33 should be the first non-whitespace char and 126 the last
+            if (eachCharacter >= 33 && eachCharacter <= 126) {
+                validity = true;
+                break;
+            }
+        }
+    }
 
-	return validity;
+    return validity;
 }
 
 
 /*
- * This is the most important one!
  * In this function we'll read a line at a time from the inputFile, and store
  * that text into a new StringBlob object.
  */
-const StringBlob&
-readInputFile(std::ifstream inputFile) {
-	StringBlob inputFileText;
-	std::string eachWord, eachLine;
+StringBlob
+read(std::string inputFileName) {
+    std::ifstream inputFile(inputFileName, std::ifstream::in);
+    StringBlob inputFileText;
+    std::string eachWord, eachLine;
 
-	while (std::getline(inputFile, eachLine)) {
-		std::istringstream lineRead(eachLine);
-		while (lineRead >> eachWord)
-			inputFileText.pushBack(eachWord);
-		inputFileText.pushBack("\n");
-	}
+    while (std::getline(inputFile, eachLine)) {
+        std::istringstream lineRead(eachLine);
+        while (lineRead >> eachWord)
+            inputFileText.pushBack(eachWord + " ");
+        inputFileText.pushBack("\n");
+    }
 
-	return inputFileText;
+    return inputFileText;
 }
 
 
@@ -101,17 +103,16 @@ readInputFile(std::ifstream inputFile) {
  * one string at a time.
  */
 std::ostream&
-printInputFile(const StringBlob& inputFileText, std::ostream &ostream) {
-	StringBlobPtr linesOfText(inputFileText.begin(), inputFileText.end());
+printInputFile(StringBlob& inputFileText, std::ostream &ostream) {
+    for (StringBlobPtr first(inputFileText.begin()), last(inputFileText.end());
+         first.iCurrentWord != last.iCurrentWord;
+         first.incrementWordPointer()) {
 
-	// Print each word using StringBlobPtr member functions.
-	// StringBlobPtr has a member function to check when it should stop.
-	std::string wordBuffer;
-	for (linesOfText.iCurrentWord = 0;
-	     wordBuffer = linesOfText.getCurrentWord();
-	     linesOfText.incrementWordPointer()) {
-		ostream << wordBuffer;
-	}
+        // Print each word using StringBlobPtr member functions.
+        // StringBlobPtr has a member function to check when it should stop.
+        ostream << first.getCurrentWord();
+    }
 
-	return ostream;
+    return ostream;
 }
+

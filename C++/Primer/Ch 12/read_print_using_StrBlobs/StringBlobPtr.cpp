@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          30 Jun 2015, 18:22
- *  Last updated:           ---
+ *  Last updated:     01 Jul 2015, 18:08 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -31,9 +31,11 @@
 #include "StringBlobPtr.h"
 
 
-StringBlobPtr::StringBlobPtr() = default;
+StringBlobPtr::StringBlobPtr()
+		: //wordPtr(std::weak_ptr<std::vector<std::string>> ()),
+          iCurrentWord(0) {}
 StringBlobPtr::StringBlobPtr(StringBlob &stringRead, size_t size)
-		: wordPtr(stringRead.data), iCurrentWord(size) {}
+		: iCurrentWord(size), wordPtr(stringRead.data) {}
 
 
 /*

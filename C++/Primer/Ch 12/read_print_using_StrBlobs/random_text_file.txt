@@ -1,0 +1,27 @@
+Jon Skeet can divide by zero.
+
+Jon Skeet's SO reputation is only as modest as it is because of
+integer overflow (SQL Server does not have a datatype large enough)
+
+Jon Skeet is the only top 100 SO user who is human. The others are
+bots that he coded to pass the time between questions.
+
+Jon Skeet coded his last project entirely in Microsoft Paint, just
+for the challenge.
+
+Jon Skeet does not use exceptions when programming. He has not
+been able to identify any of his code that is not exceptional.
+
+When Jon Skeet's code fails to compile the compiler apologises.
+
+Jon Skeet does not use revision control software. None of his code
+has ever needed revision.
+
+When you search for "guru" on Google it says "Did you mean Jon
+Skeet?"
+
+Jon Skeet has already written a book about C# 5.0.
+It’s currently sealed up.
+In three years, Anders Hejlsberg is going to open the book to see if the
+language design team got it right.
+

@@ -33,12 +33,10 @@
 ******************************************************************************/
 
 
-
-#include <iostream>
-
+#include <sstream>
 
 #include "FileOperations.h"
-#include "StringBlob.h"
+#include "StringBlobPtr.h"
 
 
 /*
@@ -46,7 +44,7 @@
  * Return an ifstream initialized with that file name.
  */
 std::ifstream
-getInputFile(void v) {
+getInputFile() {
 	std::cout << "\nPlease enter the name of an input file:\n\t->";
 	std::string inputFileName;
 	std::cin >> inputFileName;
@@ -60,30 +58,60 @@ getInputFile(void v) {
  */
 bool
 isValid(std::ifstream inputFile) {
-	bool valid = false;
+	bool validity = false;
 	if (inputFile) {
 		std::string buffer;
 		std::getline(inputFile, buffer);
 		for (const auto & eachCharacter : buffer) {
 			// 33 should be the first nonwhitespace char and 126 the last
 			if (eachCharacter >= 33 && eachCharacter <= 126) {
-				valid == true;
+				validity = true;
 				break;
 			}
 		}
 	}
 
-	return valid;
+	return validity;
 }
 
 
 /*
  * This is the most important one!
- * In this function we'll read a line at a time from the inputFile,
- * store that vector of strings in a shared_ptr<vector<string>> of StringBlob
- * and then print each string using StringBlobPtr.
+ * In this function we'll read a line at a time from the inputFile, and store
+ * that text into a new StringBlob object.
  */
-void
-printInputFile(std::ifstream inputFile) {
+const StringBlob&
+readInputFile(std::ifstream inputFile) {
+	StringBlob inputFileText;
+	std::string eachWord, eachLine;
 
+	while (std::getline(inputFile, eachLine)) {
+		std::istringstream lineRead(eachLine);
+		while (lineRead >> eachWord)
+			inputFileText.pushBack(eachWord);
+		inputFileText.pushBack("\n");
+	}
+
+	return inputFileText;
+}
+
+
+/*
+ * Here we'll take a StringBlob object and print it's content (vector<string>)
+ * one string at a time.
+ */
+std::ostream&
+printInputFile(const StringBlob& inputFileText, std::ostream &ostream) {
+	StringBlobPtr linesOfText(inputFileText.begin(), inputFileText.end());
+
+	// Print each word using StringBlobPtr member functions.
+	// StringBlobPtr has a member function to check when it should stop.
+	std::string wordBuffer;
+	for (linesOfText.iCurrentWord = 0;
+	     wordBuffer = linesOfText.getCurrentWord();
+	     linesOfText.incrementWordPointer()) {
+		ostream << wordBuffer;
+	}
+
+	return ostream;
 }

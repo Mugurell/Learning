@@ -73,6 +73,7 @@ private:
 	// testValidity returns a shared_ptr to the vector if the check succeeds
 	std::shared_ptr<std::vector<std::string>>
 		testValidity(std::size_t, const std::string&) const;
+
 	// store a weak_ptr which means the underlying vector might be destroyed
 	std::weak_ptr<std::vector<std::string>> wordPtr;
 	std::size_t iCurrentWord;       // current position within the array

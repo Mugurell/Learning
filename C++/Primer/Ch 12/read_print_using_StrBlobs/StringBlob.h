@@ -50,8 +50,8 @@ class StringBlobPtr;
 
 class StringBlob {
 public:
-	using SizeType = std::vector<std::string>::size_type;
 	friend class StringBlobPtr;
+	using SizeType = std::vector<std::string>::size_type;
 	StringBlob();
 	StringBlob(std::initializer_list<std::string> il);
 

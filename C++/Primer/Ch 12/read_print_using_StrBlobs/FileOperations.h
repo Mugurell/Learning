@@ -11,9 +11,12 @@
 #include <vector>
 #include <string>
 
+#include "StringBlob.h"
+
 
 std::ifstream getInputFile(void);
 bool isValid(std::ifstream);
-void printInputFile(std::ifstream);
+const StringBlob& readInputFile(std::ifstream);
+std::ostream& printInputFile(const StringBlob&, std::ostream&);
 
 #endif //READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H

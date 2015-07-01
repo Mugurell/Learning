@@ -40,13 +40,18 @@
 #include <fstream>
 
 #include "StringBlobPtr.h"
-#include "StringBlob.h"
+#include "FileOperations.h"
 
 
 int main()
 {
-	std::cout << "Now ";
+	std::ifstream inputFile = getInputFile();
+	isValid(inputFile);
+	StringBlob inputFileText = readInputFile(inputFile);
 
+	std::cout << printInputFile(inputFileText, std::cout);
+
+	std::cout << "\n\nPretty cool, huh\n" << std::endl;
 
 	return 0;
 }

@@ -75,7 +75,7 @@ StringBlobPtr::getCurrentWord() const {
  */
 StringBlobPtr&
 StringBlobPtr::incrementWordPointer() {
-	// if iCurrentWord allready points past the end of the container
+	// if iCurrentWord already points past the end of the container
 	// can't increment it
 	testValidity(iCurrentWord, "Increment past end of the StringBlobPtr!");
 	++iCurrentWord;     // advance the current state

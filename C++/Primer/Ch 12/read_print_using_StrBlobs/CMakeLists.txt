@@ -9,6 +9,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-set(SOURCE_FILES main.cc StringBlob.cpp StringBlobPtr.cpp)
+set(SOURCE_FILES main.cc StringBlob.cpp StringBlobPtr.cpp FileOperations.cpp)
 
 add_executable(read_print_using_StrBlobs ${SOURCE_FILES})

@@ -23,10 +23,6 @@ bool is_open(const std::ifstream&, const std::string&);
 bool is_open(const std::ofstream&, const std::string&);
 bool is_empty(std::ifstream&, const std::string&);
 
-// This are declared as friend in the PersonInfo class.
-void read_input_file2people(std::ifstream&, std::vector<PersonInfo>&);
-void print_save_contacts(const std::vector<PersonInfo>&, std::ofstream&, bool);
-
 void inline clear_cin(void);
 
 

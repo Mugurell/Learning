@@ -24,7 +24,7 @@
 # .idea/    - I use it on more platforms.
 
 # (**/ to recurse through all sub-folders)
-*/.idea/workspace.xml 
+*/.idea/workspace.xml
 */.idea/tasks.xml
 */.idea/datasources.xml
 */.idea/dataSources.ids
@@ -61,7 +61,7 @@ crashlytics-build.properties
 **/bin/*
 
 # Unignore all `.jar` in `bin` dir
-#!**/bin/*.jar
+!**/bin/*.jar
 
 # Ignore all `library.jar` in `bin` dir
 **/bin/library.jar
@@ -107,6 +107,9 @@ Thumbs.db
 
 
 
+-#Ignore Barbara's files		
+Ch zz  - Sources		
+
 
 #Ignore archives
 **.zip
@@ -116,4 +119,4 @@ Thumbs.db
 
 #Ignore stupid .fuse_hidden files on Linux
 .fuse*
-**/.idea/workspace.xml
+

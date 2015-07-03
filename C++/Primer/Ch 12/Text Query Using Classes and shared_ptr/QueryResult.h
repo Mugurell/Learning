@@ -49,7 +49,6 @@
 #include <set>
 
 
-
 class QueryResult {
 friend std::ostream& print(std::ostream&, const QueryResult&);
 public:
@@ -64,5 +63,6 @@ private:
     std::shared_ptr<std::set<lineNo>> lineNumber;    // lines it's on
     std::shared_ptr<std::vector<std::string>> file;  // input file
 };
+
 
 #endif //QUERY_FILE_FOR_A_WORD_QUERYRESULT_H

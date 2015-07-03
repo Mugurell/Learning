@@ -24,10 +24,10 @@
 # .idea/    - I use it on more platforms.
 
 # (**/ to recurse through all sub-folders)
-**/.idea/workspace.xml 
-**/.idea/tasks.xml
-**/.idea/datasources.xml
-**/.idea/dataSources.ids
+*/.idea/workspace.xml
+*/.idea/tasks.xml
+*/.idea/datasources.xml
+*/.idea/dataSources.ids
 
 ## File-based project format:
 *.ipr
@@ -58,12 +58,10 @@ crashlytics-build.properties
 *.sm
 
 # Ignore `bin` dir
-bin/
-# or
 **/bin/*
 
 # Unignore all `.jar` in `bin` dir
-!**/bin/*.jar
+#!**/bin/*.jar
 
 # Ignore all `library.jar` in `bin` dir
 **/bin/library.jar
@@ -79,16 +77,13 @@ bin/
 # files for the dex VM
 *.dex
 
-# Java class files
-*.class
 
 # built native files
-*.out
 *.o
+*.out
 *.so
 
 # generated files
-bin/
 gen/
 
 # Ignore gradle files
@@ -119,9 +114,6 @@ Thumbs.db
 **.7zip
 
 
-#Ignore Barbara's files
-Ch zz  - Sources
-
-
 #Ignore stupid .fuse_hidden files on Linux
 .fuse*
+

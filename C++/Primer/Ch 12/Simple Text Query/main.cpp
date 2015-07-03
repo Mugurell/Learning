@@ -43,6 +43,7 @@
 #include <iterator>         // back_inserter()
 #include <algorithm>        // remove_copy_if()
 
+
 std::string getInputFileName();
 std::string getSearchedWord();
 
@@ -60,6 +61,7 @@ void textQuery(const std::string inputFileName, const std::string searchedWord);
 std::map<std::string, std::set<std::vector<std::string>::size_type>>
         constructWordsDatabase(const std::string inputFileName);
 
+
 int main()
 {
     std::cout << "\n\tWelcome to the amazing Text Query Program\n\n";
@@ -69,6 +71,7 @@ int main()
 
     std::cout << "\nPretty cool, huh?\n" << std::endl;
 }
+
 
 std::string getInputFileName()
 {

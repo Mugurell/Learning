@@ -79,4 +79,5 @@ private:
                             // which that word appears.
 };
 
+
 #endif //QUERY_FILE_FOR_A_WORD_TEXTQUERY_H

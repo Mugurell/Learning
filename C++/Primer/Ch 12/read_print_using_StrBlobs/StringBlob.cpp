@@ -53,6 +53,7 @@ StringBlob::StringBlob()
 StringBlob::StringBlob(std::initializer_list<std::string> il)
         : data(std::make_shared<std::vector<std::string>> (il)) {}
 
+
 /*
  * Private methods implementation:
  */
@@ -73,6 +74,7 @@ StringBlob::getFirstWord() {
     return data->front();
 }
 
+
 const std::string&
 StringBlob::getFirstWord() const {
     testValidity(0, "StringBlob is empty!");
@@ -86,14 +88,17 @@ StringBlob::getLastWord() {
     return data->back();
 }
 
+
 const std::string&
 StringBlob::getLastWord() const {
     testValidity(0, "StringBlob is empty!");
     return data->back();
 }
 
+
 StringBlobPtr
 StringBlob::begin() { return StringBlobPtr(*this); }
+
 
 StringBlobPtr 
 StringBlob::end() {
@@ -101,14 +106,18 @@ StringBlob::end() {
     return ret;
 }
 
+
 void
 StringBlob::popBack() { data->pop_back(); }
+
 
 void
 StringBlob::pushBack(const std::string &temp) { data->push_back(temp); }
 
+
 bool
 StringBlob::isEmpty() const { return data->empty(); }
+
 
 StringBlob::SizeType
 StringBlob::size() const { return data->size(); }

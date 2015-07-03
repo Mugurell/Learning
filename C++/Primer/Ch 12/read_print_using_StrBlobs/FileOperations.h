@@ -19,4 +19,5 @@ bool isValid(std::string inputFileName);
 StringBlob read(std::string inputFileName);
 std::ostream& printInputFile(StringBlob&, std::ostream&);
 
+
 #endif //READ_PRINT_USING_STRBLOBS_FILEOPERATIONS_H

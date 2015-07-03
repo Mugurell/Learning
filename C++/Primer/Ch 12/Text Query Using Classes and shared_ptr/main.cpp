@@ -46,6 +46,7 @@
 std::string getInputFileName();
 std::string getSearchedWord();
 
+
 int main()
 {
     std::cout << "\n\tWelcome to the amazing Text Query Program\n\n";

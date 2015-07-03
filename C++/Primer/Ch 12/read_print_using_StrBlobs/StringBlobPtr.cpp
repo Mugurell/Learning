@@ -59,6 +59,7 @@ StringBlobPtr::testValidity(std::size_t searchedWordNo,
 	return vectorPtr;   // otherwise return a shared_ptr to the vector
 }
 
+
 /*
  * If check succeeds, p is a shared_ptr to the vector to which this
  * StringBlobPtr points. The expression (*vectorPtr)[iCurrentWord] dereferences
@@ -71,6 +72,7 @@ StringBlobPtr::getCurrentWord() const {
 			vectorPtr = testValidity(iCurrentWord, "Dereference past end!");
 	return (*vectorPtr)[iCurrentWord];
 }
+
 
 /*
  * prefix: will return a reference to the incremented object

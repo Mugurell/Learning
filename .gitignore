@@ -61,7 +61,7 @@ crashlytics-build.properties
 **/bin/*
 
 # Unignore all `.jar` in `bin` dir
-#!**/bin/*.jar
+!**/bin/*.jar
 
 # Ignore all `library.jar` in `bin` dir
 **/bin/library.jar
@@ -107,6 +107,9 @@ Thumbs.db
 
 
 
+-#Ignore Barbara's files		
+Ch zz  - Sources		
+
 
 #Ignore archives
 **.zip
@@ -116,3 +119,4 @@ Thumbs.db
 
 #Ignore stupid .fuse_hidden files on Linux
 .fuse*
+

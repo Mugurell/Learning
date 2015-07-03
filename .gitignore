@@ -116,3 +116,4 @@ Thumbs.db
 
 #Ignore stupid .fuse_hidden files on Linux
 .fuse*
+**/.idea/workspace.xml

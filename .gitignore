@@ -3,10 +3,6 @@
 # except those with an extension
 !**.*
 
-
-#Ignore Barbara's files		
-**/C++/Primer/Ch zz  - Sources/
-
 # Unignore all dirs
 !**/
 
@@ -104,12 +100,6 @@ proguard/
 
 # Windows clutter
 Thumbs.db
-
-
-
--#Ignore Barbara's files		
-Ch zz  - Sources		
-		
 
 
 #Ignore archives

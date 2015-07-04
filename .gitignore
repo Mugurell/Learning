@@ -1,3 +1,20 @@
+# Ignore all files (Needed for the linux executables to be ignored)
+**
+# except those with an extension
+!**.*
+
+# Unignore all dirs
+!**/
+
+# and special needed files
+!README
+!LICENCE
+!COPYING
+!INSTALL
+!Makefile
+
+
+
 ## Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
 # Directory-based project format:
 # .idea/    - I use it on more platforms.

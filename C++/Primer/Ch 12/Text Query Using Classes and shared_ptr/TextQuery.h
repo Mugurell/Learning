@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 11:33 AM
- *  Last updated:           ---
+ *  Last updated:     07 Jul 2015, 16:54 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -66,6 +66,11 @@ public:
 
     // will create a new TextQuery object from an ifstream object
     TextQuery(std::ifstream &inputFile_);
+
+    // Because the objects of the TextQuerry and QuerryResult classes are using
+    // smart pointers to manage dynamic memory, we'll want to prevent copying
+    TextQuery(const TextQuery&) = delete;
+    TextQuery& operator=(const TextQuery&) = delete;
 
     // will return a QueryResult representing the lines on which
     // searchedWord appears.

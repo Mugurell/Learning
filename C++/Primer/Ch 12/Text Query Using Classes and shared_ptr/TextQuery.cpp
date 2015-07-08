@@ -71,7 +71,7 @@ TextQuery::query(const std::string &searchedWord) const {
     //using find and not a subscript to avoid adding words to wordsDatabase
     auto loc = wordsDatabase.find(searchedWord);
     if (loc == wordsDatabase.end())
-        return QueryResult(searchedWord, noData, inputFileText);    // not found
+        return QueryResult(searchedWord, noData, inputFileText);   // not found
     else
         return QueryResult(searchedWord, loc->second, inputFileText);
 }

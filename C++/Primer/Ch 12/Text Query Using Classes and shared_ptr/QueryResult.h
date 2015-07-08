@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 11:49 AM
- *  Last updated:           ---
+ *  Last updated:     07 Jul 2015, 16:54 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -21,7 +21,7 @@
  *  These results include the set of line numbers associated with the given
  *  word and the corresponding lines of text from the input file. They are
  *  stored in objects of type TextQuery. Given that this class conceptually
- *  “share” data with TextQuerry, we’ll use shared_ptrs to reflect that
+ *  ï¿½shareï¿½ data with TextQuerry, weï¿½ll use shared_ptrs to reflect that
  *  sharing in our data structures.
  *  At the end. the data is to be printed by a member function.
  *
@@ -32,7 +32,8 @@
  *  --- None ---
  *
  *  Notes:
- *  ---
+ *  Initially tried to delete hide both copy control member of this class also,
+ *  but the copy constructor is used when TextQuery::querry returns.
  *
 *******************************************************************************
 ******************************************************************************/
@@ -58,6 +59,11 @@ public:
     QueryResult(std::string searchedWord_,
                 std::shared_ptr<std::set<lineNo>> lineNo_,
                 std::shared_ptr<std::vector<std::string>> inputFName_);
+
+    // Because the objects of the TextQuerry and QuerryResult classes are using
+    // smart pointers to manage dynamic memory, we'll want to prevent copying
+    QueryResult(const QueryResult&) = default;      // see Notes
+    QueryResult& operator=(const QueryResult&) = delete;
 private:
     std::string searchedWord;           // word this query represents
     std::shared_ptr<std::set<lineNo>> lineNumber;    // lines it's on

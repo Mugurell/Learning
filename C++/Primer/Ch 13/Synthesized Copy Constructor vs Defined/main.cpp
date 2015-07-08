@@ -41,13 +41,12 @@
 **  Define ex_fifteen for the copy constructor to generate a new serial number.
 **      Default is to use the synthesized copy constructor.
 **  Define const_f_parameter so that the parameter in f will be
-**  const numbered&.
+**  const Numbered&.
 **
 *******************************************************************************
 ******************************************************************************/
 
 
-#define const_f_paramete
 
 #include <iostream>
 
@@ -63,9 +62,7 @@ int main()
     f(one);
     std::cout << "\n\nNow let's create 3 new objects: a, b = a, c = b"
               << "\nand print them:" << std::endl;
-    Numbered a;
-    Numbered b = a;
-    Numbered c = b;
+    Numbered a, b = a, c = b;
     f(a);
     f(b);
     f(c);

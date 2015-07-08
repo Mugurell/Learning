@@ -10,7 +10,7 @@
 
 void f(const Numbered &item) { std::cout << item.serialNo << std::endl; }
 
-#endif
-
-
+#else
 void f(Numbered &item) { std::cout << item.serialNo << std::endl; }
+
+#endif

@@ -24,7 +24,7 @@
 **                  : ps(new std::string(s)), i(0) { }
 **            private:
 **              std::string *ps;
-**              int i;
+**         
 **            };
 **  Exercise 13.8: Write the assignment operator for the HasPtr class from
 **  exercise 13.5. As with the copy constructor, your assignment operator 
@@ -102,26 +102,3 @@ HasPtr::operator=(const HasPtr &newObject_) {
     /*this->*/ i = newObject_.i;
     return *this;
 }
-
-
-
-
-
-
-
-
-
-
-// HasPtr&
-// HasPtr::operator=(const HasPtr &received_) {
-//     this-> *ps += *received_.ps;
-//     /*this->*/ i += received_.i;
-// }
-
-
-
-
-
-
-
-

@@ -1,21 +1,17 @@
-# Ignore all
-*
-
-# Unignore all with extensions
-!*.*
+# Ignore all files (Needed for the linux executables to be ignored)
+**
+# except those with an extension
+!**.*
 
 # Unignore all dirs
 !**/
 
-# Unignore the license
-!LICENSE
-
-
-
-### Above combination will ignore all files without extension ###
-
-
-
+# and special needed files
+!README
+!LICENCE
+!COPYING
+!INSTALL
+!Makefile
 
 
 
@@ -67,8 +63,6 @@ crashlytics-build.properties
 **/bin/library.jar
 
 
-
-
 # built application files
 *.apk
 *.ap_
@@ -106,11 +100,6 @@ proguard/
 Thumbs.db
 
 
-
--#Ignore Barbara's files		
-Ch zz  - Sources		
-
-
 #Ignore archives
 **.zip
 **.rar
@@ -120,3 +109,6 @@ Ch zz  - Sources
 #Ignore stupid .fuse_hidden files on Linux
 .fuse*
 
+
+#Ignore gedit's backups. (with a tilde '~' suffix)
+*~

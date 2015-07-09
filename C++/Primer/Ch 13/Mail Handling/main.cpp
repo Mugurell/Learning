@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          08 Jul 2015, 21:43
- *  Last updated:           ---
+ *  Last updated:     09 Jul 2015, 07:18 PM 
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -32,14 +32,11 @@
  *  --- None ---
  *
  *  TODO:
- *  --- None --- 
- *
- *  Expected result:
- *  --- You can write here the execution command & the expected result --- 
+ *  --- None ---
  *
  *  Notes:
- *  --- Anything that stands out ---
- *  --- Or needs to be treated with special attention ---
+ *  This program clearly isn't fully utilized.
+ *  Was just an exercise to try and implement various concepts..
  *
 *******************************************************************************
 ******************************************************************************/
@@ -47,3 +44,35 @@
 
 
 #include <iostream>
+
+#include "Message.h"
+#include "Folder.h"
+
+
+int main()
+{
+    std::cout << "\n\n\t\tEMail Program\n\n";
+    std::cout << "\nJust for the fun let's quicly create 2 emails,"
+              << "\none blank, and one with some characters in it..\n";
+
+    Message email1;
+    Message email2("Tommorow is another day");
+    std::cout << "\"" << email1.getContents() << "\"\n"
+              << "\"" << email2.getContents() << "\"";
+
+    std::cout << "\n\nNow let's copy the second mail into 2 folders,"
+              << "\nLet's say draft and saved." << std::endl;
+    Folder draft(&email2);
+    Folder saved(&email2);
+
+    std::cout << "\nEdit it a little.. \nand print 'em again." << std::endl;
+    email2 = (Message(std::string("Suffer the pain of discipline")
+                                 + " or suffer the pain of regret!"));
+
+    std::cout << "\"" << email1.getContents() << "\"\n"
+              << "\"" << email2.getContents() << "\"";
+
+
+    std::cout << "\n\nPretty cool, huh?\n" << std::endl;
+    return 0;
+}

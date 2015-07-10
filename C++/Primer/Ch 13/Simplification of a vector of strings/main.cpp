@@ -22,10 +22,11 @@
  *  However, this strategy does not work for every class; some classes need to
  *  do their own allocation. Such classes generally must define their own
  *  copy-control members to manage the memory they allocate.
- *  As an example, we’ll implement a simplification of the library vector class.
- *  Among the simplifications we’ll make is that our class will not be a
- *  template. Instead, our class will hold strings. Thus, we’ll call our
+ *  As an example, weï¿½ll implement a simplification of the library vector class.
+ *  Among the simplifications weï¿½ll make is that our class will not be a
+ *  template. Instead, our class will hold strings. Thus, weï¿½ll call our
  *  class StrVec.
+ *
  *
  *  Bugs:
  *  --- None ---
@@ -42,4 +43,22 @@
 
 
 #include <iostream>
+
+#include "StrVec.h"
+
+
+int main()
+{
+    std::cout << "\n\nThis is just a test!\n\n";
+
+    StrVec vec{"Ana"};
+    std::cout << "vec.capacity() = " << vec.capacity() << "\n\n";
+     vec.reserve(20);
+    vec.push_back("Ana");
+    vec.push_back("Ana");
+    std::cout << "After vec.reserve(20) - " << vec.capacity() << "\n\n";
+    vec.resize(10);
+    std::cout << "After vec.resize(10) - " << vec.capacity() << "\n\n";
+    return 0;
+}
 

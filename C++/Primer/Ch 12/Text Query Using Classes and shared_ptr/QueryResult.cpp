@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 06:40 PM
- *  Last updated:           ---
+ *  Last updated:     10 Jul 2015, 19:55:13:829
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -34,7 +34,7 @@
 
 QueryResult::QueryResult(std::string searchedWord_,
                          std::shared_ptr<std::set<lineNo>> lineNo_,
-                         std::shared_ptr<std::vector<std::string>> inputFName_)
+                         std::shared_ptr<StrVec> inputFName_)
         : searchedWord(searchedWord_), lineNumber(lineNo_), file(inputFName_) {}
 
 

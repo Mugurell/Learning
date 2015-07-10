@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          05 Jul 2015, 16:26
- *  Last updated:           ---
+ *  Last updated:     10 Jul 2015, 19:39:22:454
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -30,6 +30,11 @@
 
 
 
+
+#ifndef TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
+#define TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
+
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -38,7 +43,5 @@
 std::string getInputFileName();
 std::string getSearchedWord();
 
-#ifndef TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
-#define TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
 
 #endif //TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H

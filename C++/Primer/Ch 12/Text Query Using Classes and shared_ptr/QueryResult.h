@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 11:49 AM
- *  Last updated:     07 Jul 2015, 16:54 
+ *  Last updated:     10 Jul 2015, 19:39:05:733
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -44,21 +44,23 @@
 
 
 #include <iostream>
-#include <vector>
+// #include <vector>        // I'll use my own implementation
 #include <string>
 #include <memory>
 #include <set>
+
+#include "StrVec.h"       // My own implementation of a simple vector of strings
 
 
 class QueryResult {
 friend std::ostream& print(std::ostream&, const QueryResult&);
 public:
-    typedef std::vector<std::string>::size_type
-            lineNo;         // type for the numbers of the lines in which the
+    // type for the numbers of the lines in which the searched word occurs
+    typedef StrVec::size_type lineNo;
 
     QueryResult(std::string searchedWord_,
                 std::shared_ptr<std::set<lineNo>> lineNo_,
-                std::shared_ptr<std::vector<std::string>> inputFName_);
+                std::shared_ptr<StrVec> inputFName_);
 
     // Because the objects of the TextQuerry and QuerryResult classes are using
     // smart pointers to manage dynamic memory, we'll want to prevent copying
@@ -67,7 +69,7 @@ public:
 private:
     std::string searchedWord;           // word this query represents
     std::shared_ptr<std::set<lineNo>> lineNumber;    // lines it's on
-    std::shared_ptr<std::vector<std::string>> file;  // input file
+    std::shared_ptr<StrVec> file;  // input file
 };
 
 

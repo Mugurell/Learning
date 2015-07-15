@@ -25,6 +25,8 @@
 **  destructor.
 **  Exercise 13.26: Write your own version of the StrBlob class described in
 **  the previous exercise.
+**  Exercise 13.55: Add an rvalue reference version of push_back 
+**  to your StrBlob.
 **
 **  Bugs:
 **  --- None ---
@@ -56,6 +58,7 @@
 #include <string>
 #include <memory>          // shared_ptr, make_shared()
 #include <stdexcept>       // out_of_range
+#include <utility>         // std::move
 
 
 /*
@@ -72,9 +75,13 @@ public:
 
     // Copy constructor - ex 13.26
     StrBlob(const StrBlob &received);
+    // Move constructor
+    StrBlob(StrBlob &&received) noexcept;
 
     // Copy assignment operator - ex 13.26
     StrBlob& operator=(const StrBlob &received);
+    // Move-assignment operator
+    StrBlob& operator=(StrBlob &&received) noexcept;
 
 
 // member checks 
@@ -82,6 +89,7 @@ public:
     bool empty() const { return data_->empty; }
 // add and remove elements
     void push_back(const std::string &t) { data_->push_back(t); }
+    void push_back(std::string &&t) { data_->push_back(std::move(t)); }
     void pop_back() { data_->pop_back(); }
 // return StrBlobPtr to the first and one past the last elements
     StrBlobPtr begin() { return StrBlobPtr(*this); }
@@ -94,6 +102,7 @@ public:
     const std::string& front() const;
     std::string& back();
     const std::string& back() const;
+
 private:
     std::shared_ptr<std::vector<std::string>> data_;
     
@@ -112,6 +121,28 @@ inline StrBlob::StrBlob(std::initializer_list<std::string> il)
 inline StrBlob::StrBlob(const StrBlob &received) {
     /*this->*/ data_=
          std::make_shared<std::vector<std::string>>(*received.data_);
+}
+
+inline StrBlob::StrBlob(StrBlob &&received) noexcept
+    : data_ = std::move(received.data_)
+{
+    // make sure to leave the rhs operand in a state 
+    // safe to run the destructor on
+    received.data_ = nullptr
+}
+
+StrBlob&
+inline StrBlob::operator=(StrBlob &&received) noexcept
+{
+    // make sure to avoid self-assignment
+    if (this != &received) {
+        free();
+        data_ = received.data_;
+
+        // leave the rhs object in a state safe to be destructed
+        received.data_ = nullptr;
+    }
+    return *this;
 }
 
 StrBlob&

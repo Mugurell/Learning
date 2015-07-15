@@ -42,6 +42,27 @@ Message::Message(const Message &constructFromMe)
 }
 
 
+Message::Message(Message &&constructFromMe)
+{
+    // moves folders and updates the Folder pointers
+    moveFolders(&constructFromMe);
+}
+
+
+Message&
+Message::operator=(Message &&moveFromMe)
+{
+    if (this != &moveFromMe) {   // direct check for self-assignment
+        removeFromFolders();     // destroy the state of the left operand
+        contents = std::move(moveFromMe.contents);  // move assignment
+
+        // reset the Folders to point to this Message
+        moveFolders(&moveFromMe);
+    }
+    return *this;
+}
+
+
 Message&
 Message::operator=(const Message &copyFromMe) {
     // handle self-assignment by removing pointers before inserting them
@@ -86,6 +107,18 @@ Message::removeFromFolders() {
 }
 
 
+void
+Message::moveFolders(Message *message)
+{
+    folders = std::move(message->folders);  // uses set move assignment
+    for (Folder *each : folders) {      // for each Folder
+        each->removeMessage(message);   // remove the old Message from Folder
+        each->addMessage(this);         // add this Message to that Folder
+    }
+    message->folders.clear();     // ensure that destroying message is harmless
+}
+
+
 // will put the Message into the given Folder
 void
 Message::save(Folder &folder) {
@@ -106,6 +139,7 @@ Message::remove(Folder &folder) {
     // remove this Message from folder's list of Messages
     folder.removeMessage(this);
 }
+
 
 
 void
@@ -129,8 +163,6 @@ swap(Message &leftMessage, Message &rightMessage) {
         folder->addMessage(&rightMessage);
 }
 
-
-
 // Functions used in the to swap Folders
 void
 Message::addFolder(Folder *received) {
@@ -138,11 +170,13 @@ Message::addFolder(Folder *received) {
                                 // folders member of this Message
 }
 
+
 void
 Message::removeFolder(Folder *received) {
     folders.erase(received);    // remove pointer to the received Folder from
                                 // the folders member of this Message
 }
+
 
 
 const std::string &Message::getContents() const {

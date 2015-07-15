@@ -16,6 +16,10 @@
  *  Description:
  *  Implementation file for the StrVec class
  *
+ *  Exercise 13.43: Rewrite the free member to use for_each and a lambda
+ *  in place of the for loop to destroy the elements. Which
+ *  implementation do you prefer, and why?
+ *
  *  Bugs:
  *  --- None ---
  *
@@ -31,12 +35,17 @@
 
 
 #include <utility>      // for std::move
+#include <algorithm>    // std::for_each()
+#include <iostream>
+#include <iterator>     // for std::make_move_iterator
+#include <utility>      // for std::move
 
 #include "StrVec.h"
 
 
 // Constructor that takes an initializer list of strings, empty by default.
-StrVec::StrVec(const std::initializer_list<std::string> &stringList) {
+StrVec::StrVec(const std::initializer_list<std::string> &stringList)
+{
     const std::pair<std::string*, std::string*> newData =
             allocAndCopy(stringList.begin(), stringList.end());
 
@@ -47,8 +56,9 @@ StrVec::StrVec(const std::initializer_list<std::string> &stringList) {
 }
 
 
-// Copy control members
-StrVec::StrVec(const StrVec &constructFromMe) {
+// Copy/move control members
+StrVec::StrVec(const StrVec &constructFromMe)
+{
     const std::pair<std::string*, std::string*> newData =
             allocAndCopy(constructFromMe.begin(), constructFromMe.end());
 
@@ -59,8 +69,20 @@ StrVec::StrVec(const StrVec &constructFromMe) {
     firstFree = offTheEnd = newData.second;
 }
 
+StrVec::StrVec(StrVec &&constructFromMe) noexcept
+    : firstElement(constructFromMe.firstElement),
+      firstFree(constructFromMe.firstFree),
+      offTheEnd(constructFromMe.offTheEnd)
+{
+    // leave constructFromMe in a safe state to run the destructor on
+    constructFromMe.firstElement = constructFromMe.firstFree
+            = constructFromMe.offTheEnd = nullptr;
+}
+
+
 StrVec&
-StrVec::operator=(const StrVec &copyFromMe) {
+StrVec::operator=(const StrVec &copyFromMe)
+{
     // call allocAndCopy to allocate exactly as many elements as in copyFromMe
     std::pair<std::string*, std::string*> data =
             allocAndCopy(copyFromMe.begin(), copyFromMe.end());
@@ -68,6 +90,23 @@ StrVec::operator=(const StrVec &copyFromMe) {
     firstElement = data.first;
     firstFree = offTheEnd = data.second;
 
+    return *this;
+}
+
+StrVec&
+StrVec::operator=(StrVec &&moveFromMe) noexcept
+{
+    // make sure to avoid self-assignment
+    if (this != &moveFromMe) {
+        free();
+        firstElement = moveFromMe.firstElement;
+        firstFree = moveFromMe.firstFree;
+        offTheEnd = moveFromMe.offTheEnd;
+
+        //leave the right hand operand in a state safe to run the destructor on
+        moveFromMe.firstElement = moveFromMe.firstFree
+                = moveFromMe.offTheEnd = nullptr;
+    }
     return *this;
 }
 
@@ -85,7 +124,8 @@ std::allocator<std::string> StrVec::alloc;
 
 
 // will set the StrVec's capacity ro exactly the required size
-void StrVec::resize(const size_t &newSize) {
+void StrVec::resize(const size_t &newSize)
+{
     // if newSize is bigger than the current capacity
     // we'll just call reserve to increase it
     if (newSize > capacity())
@@ -106,7 +146,9 @@ void StrVec::resize(const size_t &newSize) {
             alloc.construct(dest++, std::move(*curr++));
 
         // free the old heap memory once we've moved the data from it
+        //std::cout << "**Before free, size() - " << size() << "\n\n";
         free();
+        //std::cout << "**After free, size() - " << size() << "\n\n";
 
         // update our StrVec's members to newMemory ones
         firstElement = newMemory;
@@ -116,7 +158,8 @@ void StrVec::resize(const size_t &newSize) {
 
 // A call to reserve changes the capacity of the vector only if the requested
 // space exceeds the current capacity.
-void StrVec::reserve(const size_t &newSize) {
+void StrVec::reserve(const size_t &newSize)
+{
     // First check if our 'vector' has any elements.
     // If the 'vector' is empty, allocate it the required space and finish.
     if (size() == 0 && newSize > capacity()) {
@@ -158,36 +201,50 @@ void StrVec::reserve(const size_t &newSize) {
 }
 
 
-void StrVec::reallocate() {
+void StrVec::reallocate()
+{
     // we'll double the capacity of StrVec each time we reallocate
     // if StrVec is empty, we allocate room for one element
     auto newCapacity = size() ? 2 * size() : 1;
     // allocate new memory
     std::string *newData = alloc.allocate(newCapacity);
 
-    // move the data from the old memory to the new
-    std::string *dest = newData;    // points to the next free position
-                                    // in the new array
-    auto elem = firstElement;     // points to the next element in the old array
-    size_t currentSize = size();
-    for (size_t i = 0; i != currentSize; i++) {
-        // because we’re using the move constructor, the memory managed by those
-        // strings will not be copied. Instead, each string we construct will
-        // take ownership of the memory from the string to which elem points.
-        alloc.construct(dest++, std::move(*elem++));
-    }
+///////// Will use uninitialized_copy as an easier alternative to this ///////
+//
+//    // move the data from the old memory to the new
+//    std::string *dest = newData;    // points to the next free position
+//                                    // in the new array
+//    auto elem = firstElement;     // points to the next element in the old array
+//    size_t currentSize = size();
+//    for (size_t i = 0; i != currentSize; i++) {
+//        // because we’re using the move constructor, the memory managed by those
+//        // strings will not be copied. Instead, each string we construct will
+//        // take ownership of the memory from the string to which elem points.
+//        alloc.construct(dest++, std::move(*elem++));
+//    }
+//////////////////////////////////////////////////////////////////////////////
+
+    // "move" the elements using std::uninitialized_copy and move iterators
+    // (which yield rvalue references)
+    // uninitialized_copy will return an iterator to the last element in newData
+    std::string *last = std::uninitialized_copy
+                           (std::make_move_iterator(begin()),  // begin iterator
+                            std::make_move_iterator(end()),    // end iterator
+                            newData); // output iterator to the initial position
+
     free();     // free the old space once we've moved the elements
 
     // update our data structure to point to the new elements
     firstElement = newData;
-    firstFree = dest;
+    firstFree = last;
     offTheEnd = firstElement + newCapacity;
 }
 
 
 // If there isn�t room for another element, chk_n_alloc will call reallocate
 // to get more space.
-void StrVec::checkAndAllocate() {
+void StrVec::checkAndAllocate()
+{
     if (size() == capacity())
         reallocate();
 }
@@ -198,7 +255,8 @@ void StrVec::checkAndAllocate() {
 // This function returns a pair  of pointers, pointing to the beginning of the
 // new space and just past the last element it copied:
 std::pair<std::string *, std::string *>
-StrVec::allocAndCopy(const std::string *begin, const std::string *end) {
+StrVec::allocAndCopy(const std::string *begin, const std::string *end)
+{
     // allocate space to hold as many elements as there are in the range
     std::string* data = alloc.allocate(end - begin);
 
@@ -214,11 +272,17 @@ StrVec::allocAndCopy(const std::string *begin, const std::string *end) {
 // for an element. If necessary, checkAndAllocate will call reallocate.
 // When checkAndAllocate returns, push_back knows that there is room for the new
 // element. It asks its allocator member to construct a new last element.
-void StrVec::push_back(const std::string &string) {
+void StrVec::push_back(const std::string &string)
+{
     checkAndAllocate();     // ensure that there is room for another element
 
     // construct a copy of string in the element to which firstFree points
     alloc.construct(firstFree++, string);
+}
+
+void StrVec::push_back(std::string &&string) {
+    checkAndAllocate();     // reallocate the StrVec if necessary
+    alloc.construct(firstFree++, std::move(string));
 }
 
 
@@ -226,14 +290,22 @@ void StrVec::push_back(const std::string &string) {
 // then deallocate the space that this StrVec itself allocated. The for loop
 // calls the allocator member destroy in reverse order, starting with the last
 // constructed element and finishing with the first:
-void StrVec::free() {
+void StrVec::free()
+{
     // may not pass deallocate on a null pointer,
     // if firstElement is null, there's no work to do
     if (firstElement) {
         // destroy the old elements in reverse order
-        while (firstFree != firstElement)
+        while (firstFree != firstElement) {
             alloc.destroy(--firstFree);
+        }
+
+// Implementation as for Ex 13.43
+//        std::for_each(firstElement, firstFree,
+//            [] (std::string &curr) { alloc.destroy(&curr);} );
 
         alloc.deallocate(firstElement, offTheEnd - firstElement);
     }
+
 }
+

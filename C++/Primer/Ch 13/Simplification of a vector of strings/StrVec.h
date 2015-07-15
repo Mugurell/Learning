@@ -53,11 +53,14 @@ public:
 
     StrVec(const StrVec &constructFromMe);
     StrVec& operator=(const StrVec &copyFromMe);
+    StrVec(StrVec &&constructFromMe) noexcept;
+    StrVec& operator=(StrVec &&moveFromMe) noexcept;
     ~StrVec();
 
 // some public methods analogous to the ones of a std::vector
     // used to construct another element at *firstFree
-    void push_back(const std::string&);
+    void push_back(const std::string&);     // copy the element
+    void push_back(std::string &&);         // move the element
 
     // returns the number of elements actually in use
     size_t size() const { return firstFree - firstElement; }
@@ -92,7 +95,7 @@ private:
     // will reallocate the StrVec when it runs out of space.
     void reallocate();
 
-// member variables
+private:
     // To try and mimic std::vector's approach to allocate memory (preallocate
     // contiguous space, etc) we'll use an allocator to obtain raw memory.
     static std::allocator<std::string> alloc;

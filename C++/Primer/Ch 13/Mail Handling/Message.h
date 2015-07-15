@@ -16,7 +16,7 @@
  *  Description:
  *  Exercise 13.34: Write the Message class as described in this section.
  *  Exercise 13.37: Add members to the Message class to insert or remove a
- *  given Folder* into folders. These members are analogous to Folder’s addMsg
+ *  given Folder* into folders. These members are analogous to Folderï¿½s addMsg
  *  and remMsg operations.
  *
  *  Bugs:
@@ -65,9 +65,12 @@ public:
     explicit Message(const std::string &message = "")
         : contents(message) { }
 
-    // copy control to manage pointers to this Message
+    // copy/move control functions to manage pointers to this Message
     Message(const Message &constructFromMe);        // copy constructor
     Message& operator=(const Message &copyFromMe);  // copy assignment operator
+
+    Message(Message &&constructFromMe);             // move constructor
+    Message& operator=(Message &&moveFromMe);       // move assignment operator
     ~Message();                                     // destructor
 
     // add/remove this Message from the specified Folder's set of messages
@@ -85,6 +88,10 @@ private:
     void addToFolders(const Message &message);
     // remove this Message from every Folder in folders
     void removeFromFolders();
+
+    // utility function used by the move constructor/assignment operator
+    // to update the Folder pointers
+    void moveFolders(Message *message);
 
     // utility functions used by the swap method of Folder class
     // add/remove Folders which should have this message

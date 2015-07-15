@@ -92,7 +92,11 @@ public:
         : ps(new std::string(*received_.ps)), i(received_.i) {
         std::cout << "*Copied " << *ps << ' ' << i << std::endl; }
 
-// copy assignment operator (rule of 3/5)
+    Hasptr(Hasptr &&received_) noexcept
+        : ps(received_.ps), i(received_.i)
+        { received_.ps = nullptr}   // leave the original object in valid state
+
+// copy-assignment operator/move-assignment operator (rule of 3/5)
 //    HasPtr& operator=(const HasPtr &newObject_);
     HasPtr& operator=(HasPtr copyFromMe);
 
@@ -152,9 +156,12 @@ private:
 // constructor. If an exception occurs, it will happen before we have 
 // changed the left-hand operand.
 
-// Note that copyFromMe is passed by value, which means the HasPtr copy
-// constructor copies the string and the int in the right-hand operand
-// into copyFromMe.
+// Depending on the type of the argument, copy initialization uses either 
+// the copy constructor or the move constructor; 
+// lvalues are copied and rvalues are moved
+// This implementation is though less efficient than the regulat copy/move
+// assignment operators because swapping entiles unneeded operations.
+// See - http://stackoverflow.com/questions/21010371/
 inline HasPtr&
 HasPtr::operator=(HasPtr copyFromMe) {
     // swaps the content of the left-hand operand with 

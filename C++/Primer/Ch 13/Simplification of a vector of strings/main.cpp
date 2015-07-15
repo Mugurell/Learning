@@ -55,7 +55,6 @@ int main()
     std::cout << "vec.capacity() = " << vec.capacity() << "\n\n";
     vec.push_back("Aneta");
     vec.push_back("Aniela");
-    std::cout << "vec.capacity() = " << vec.capacity() << "\n\n";
     vec.reserve(20);
     std::cout << "After vec.reserve(20) - " << vec.capacity() << "\n\n";
     vec.resize(10);

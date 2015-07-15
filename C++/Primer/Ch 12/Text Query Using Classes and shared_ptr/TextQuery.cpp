@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 11:33 AM
- *  Last updated:           ---
+ *  Last updated:     10 Jul 2015, 19:38:59:588
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -40,7 +40,7 @@
 
 // will read the input file and build the map of lines to line numbers
 TextQuery::TextQuery(std::ifstream &inputFile_)
-    : inputFileText(new std::vector<std::string>) {
+    : inputFileText(new StrVec) {
     std::string lineRead;
     while (std::getline(inputFile_, lineRead)) {        // for each line in file
         inputFileText->push_back(lineRead);        // remember this line of text
@@ -71,7 +71,7 @@ TextQuery::query(const std::string &searchedWord) const {
     //using find and not a subscript to avoid adding words to wordsDatabase
     auto loc = wordsDatabase.find(searchedWord);
     if (loc == wordsDatabase.end())
-        return QueryResult(searchedWord, noData, inputFileText);    // not found
+        return QueryResult(searchedWord, noData, inputFileText);   // not found
     else
         return QueryResult(searchedWord, loc->second, inputFileText);
 }

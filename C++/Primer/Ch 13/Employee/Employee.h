@@ -2,8 +2,8 @@
 *******************************************************************************
  *
  *  Author:           Lingurar Petru-Mugurel
- *  Written:          05 Jul 2015, 16:26
- *  Last updated:     10 Jul 2015, 19:39:22:454
+ *  Written:          06 Jul 2015, 22:40
+ *  Last updated:           ---
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -14,7 +14,10 @@
  *  Execution:    ./...
  *
  *  Description:
- *  2 simple functions to get the name of the input file and the searched word.
+ *  The class should have a default constructor and a constructor that takes
+ *  a string representing the employee’s name.
+ *  Each constructor should generate a unique ID by incrementing a static data
+ *  member.
  *
  *  Bugs:
  *  --- None ---
@@ -29,19 +32,27 @@
 ******************************************************************************/
 
 
-
-
-#ifndef TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
-#define TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
+#ifndef EMPLOYEE_EMPLOYEE_H
+#define EMPLOYEE_EMPLOYEE_H
 
 
 #include <iostream>
 #include <string>
-#include <fstream>
 
 
-std::string getInputFileName();
-std::string getSearchedWord();
+class Employee {
+public:
+    Employee();
+    Employee(const std::string& name_);
+
+    std::string getName() const;
+    int getIDNo() const;
 
 
-#endif //TEXT_QUERY_USING_CLASSES_AND_SHARED_PTR_GETUSERINPUT_H
+private:
+    std::string name;
+    int IDNo;
+    static int uniqueID;
+
+};
+#endif //EMPLOYEE_EMPLOYEE_H

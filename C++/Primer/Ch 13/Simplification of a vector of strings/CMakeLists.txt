@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(Text_Query_Using_Classes_and_shared_ptr)
+project(Simplification_of_a_vector_of_strings)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
     -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow -Woverloaded-virtual \
@@ -9,6 +9,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-set(SOURCE_FILES main.cpp QueryResult.cpp TextQuery.cpp
-    GetUserInput.cpp StrVec.cpp)
-add_executable(Text_Query_Using_Classes_and_shared_ptr ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp StrVec.cpp)
+add_executable(Simplification_of_a_vector_of_strings ${SOURCE_FILES})

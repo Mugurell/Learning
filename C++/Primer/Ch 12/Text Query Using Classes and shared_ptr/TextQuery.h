@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          03 Jul 2015, 11:33 AM
- *  Last updated:           ---
+ *  Last updated:     10 Jul 2015, 19:38:51:467
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -50,28 +50,34 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
+// #include <vector>    // I'll use my own implementation
 #include <map>
 #include <set>
 #include <memory>
+
+#include "StrVec.h"     // my own implementation of a simple vector for strings
 
 
 class QueryResult;      // needed for the return type in the query function
 
 class TextQuery {
 public:
-    typedef std::vector<std::string>::size_type
-            lineNo;         // type for the numbers of the lines in which the
-                            // searched word
+    // type for the numbers of the lines in which the searched word occurs
+    typedef StrVec::size_type lineNo;
 
     // will create a new TextQuery object from an ifstream object
     TextQuery(std::ifstream &inputFile_);
+
+    // Because the objects of the TextQuerry and QuerryResult classes are using
+    // smart pointers to manage dynamic memory, we'll want to prevent copying
+    TextQuery(const TextQuery&) = delete;
+    TextQuery& operator=(const TextQuery&) = delete;
 
     // will return a QueryResult representing the lines on which
     // searchedWord appears.
     QueryResult query(const std::string& searchedWord) const;
 private:
-    std::shared_ptr<std::vector<std::string>>
+    std::shared_ptr<StrVec>
             inputFileText;  // will hold all the text read line by line from
                             // the input file.
     std::map<std::string, std::shared_ptr<std::set<lineNo>>>

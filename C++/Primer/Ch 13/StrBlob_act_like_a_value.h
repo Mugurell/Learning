@@ -3,7 +3,7 @@
 **
 **  Author:           Lingurar Petru-Mugurel
 **  Written:          mari 23 iunie 2015, 18:26:55 +0300
-**  Last updated:     mari 7 iulie 2015, 21:24:09 +0300
+**  Last updated:     joi  17 iulie 2015, 17:53:09 +0300
 **
 **  Compilation:  g++ -std=c++11 -Wall -Werror -Wextra -pedantic -Wshadow  
 **   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -27,6 +27,8 @@
 **  the previous exercise.
 **  Exercise 13.55: Add an rvalue reference version of push_back 
 **  to your StrBlob.
+**  Exercise 14.16: Define equality and inequality operators for your StrBlob,
+**  StrBlobPtr, StrVec, and String classes.
 **
 **  Bugs:
 **  --- None ---
@@ -68,6 +70,10 @@ class StrBlobPtr;
 
 class StrBlob {
     friend class StrBlobPtr;
+    
+    friend bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs);
+    friend bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs);
+
 public:
     typedef std::vector<std::string>::size_type size_type;
     StrBlob();
@@ -109,6 +115,9 @@ private:
 // throws msg if data_[i] isn't valid
     void check(size_type i, const std::string &msg) const;
 };
+
+
+
 
 
 // the first constructor will value init a vector of strings
@@ -189,6 +198,19 @@ inline back() const
 {
     check(0, "back on empty StrBlob");
     return data_->back;
+}
+
+
+// Our class has only one member variable - a shared_ptr.
+// To test it for equality we check to see if it points to the same memory
+bool operator==(const StrBlobPtr &lhs, const StrBlobPtr&rhs)
+{
+    return *lhs.data_ == *rhs.data_;
+}
+
+bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.data_ != rhs.data_;
 }
 
 

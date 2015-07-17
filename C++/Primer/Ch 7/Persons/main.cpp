@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Person.cc"
+#include "Person.h"
 
 int main() {
     std::cout << "So let's say we have a person:\n\t";

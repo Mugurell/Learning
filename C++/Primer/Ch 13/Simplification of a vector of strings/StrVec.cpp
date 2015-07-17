@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          09 Jul 2015, 21:29:32:436
- *  Last updated:     10 Jul 2015, 17:53:39:614
+ *  Last updated:     17 Jul 2015, 16:15:34:357
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -309,3 +309,67 @@ void StrVec::free()
 
 }
 
+
+
+
+/********************************************************************
+ * Comparison operators
+ * Two vectors of strings are equal when they have the same size
+ * and exactly the same strings
+ */
+bool operator==(const StrVec &lhv, const StrVec &rhv)
+{
+    bool equality = true;
+
+    if (lhv.size() == rhv.size()) {
+        for (std::string left : lhv) {
+            for (std::string right : rhv) {
+                if (left != right) {
+                    equality = false;
+                    break;
+                }
+            }
+        }
+    }
+    else
+        equality = false;
+
+    return equality;
+}
+
+bool operator!=(const StrVec &lhv, const StrVec &rhv)
+{
+    // delegate the operator== function to do the checking
+    return !(lhv == rhv);
+}
+
+
+
+/***********************************************************************
+ * Relational operations
+ * Using the same function the stl vector uses: std::lexicographical_compare.
+ * Will compare each element from each vector on the same position.
+ * If both sequences compare equal until one of them ends, the shorter
+ * sequence is lexicographically less than the longer one.
+ */
+bool operator<(const StrVec &lhv, const StrVec &rhv)
+{
+    return std::lexicographical_compare(lhv.begin(), lhv.end(),
+                                        rhv.begin(), rhv.end());
+}
+
+// For the other 3 functions we'll delegate operator< to do the cheking
+bool operator>(const StrVec &lhv, const StrVec &rhv)
+{
+    return rhv < lhv;
+}
+
+bool operator<=(const StrVec &lhv, const StrVec &rhv)
+{
+    return !(rhv < lhv);
+}
+
+bool operator>=(const StrVec &lhv, const StrVec &rhv)
+{
+    return !(lhv < rhv);
+}

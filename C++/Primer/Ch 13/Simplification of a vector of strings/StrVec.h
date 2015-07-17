@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          09 Jul 2015, 21:29:38:349
- *  Last updated:     10 Jul 2015, 17:53:26:095
+ *  Last updated:     17 Jul 2015, 16:15:39:956
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -20,6 +20,10 @@
  *  reserve, capacity, and resize.
  *  Exercise 13.40: Add a constructor that takes an initializer_list<string> to
  *  your StrVec class.
+ *  Exercise 14.16: Define equality and inequality operators for your StrBlob,
+ *  StrBlobPtr, StrVec, and String classes.
+ *  Exercise 14.18: Define relational operators for your StrBlob,
+ *  StrBlobPtr, StrVec, and String classes.
  *
  *  Bugs:
  *  --- None ---
@@ -45,6 +49,13 @@
 
 
 class StrVec {
+    friend bool operator==(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator!=(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator<(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator>(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator<=(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator>=(const StrVec &lhv, const StrVec &rhv);
+
 public:
     StrVec()    // the allocator member will be default initialized
         : firstElement(nullptr), firstFree(nullptr), offTheEnd(nullptr) { }

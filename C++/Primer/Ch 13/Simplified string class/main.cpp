@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          10 Jul 2015, 21:45:43:247
- *  Last updated:
+ *  Last updated:     17 Jul 2015, 13:07:19:126
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -39,9 +39,8 @@
 
 
 #include <iostream>
-
-#include <vector>
 #include <chrono>
+#include <vector>
 
 #include "String.h"
 
@@ -51,7 +50,8 @@ int main()
     auto t0 = std::chrono::high_resolution_clock::now();
     std::cout << "\n\n**This is just a test!**\n\n";
 
-    /*
+    /********************************************************************
+     * Ex 13.48
      * So after calling push_back 5 times I see that
      * - the copy constructor would be used 11 times
      * - the move constructor would be used 12 times. But no copying!
@@ -63,10 +63,32 @@ int main()
     wise_words.push_back("valuable ");
     wise_words.push_back("thing!");
 
+
+    /*******************************************************************
+     * Test the functions for equality operations.
+     */
+    String one;// = "Cocojambo";
+    String two;// = "Cocojambo";
+
+    if (one == two)
+        std::cout << "\nThey really are equal?\n";
+
+
+    /******************************************************************
+     * Test the functions for relational operators
+     */
+    if (one >= two)
+        std::cout << "\nYou're instinct was right!\n";
+    else
+        std::cout << "\nHmmm... you we're wrong it seems..\n";
+
+
+    /******************************************************************
+     * Print the time it took to execute this program. Just for fun.
+     */
     std::chrono::high_resolution_clock::time_point
         t1 = std::chrono::high_resolution_clock::now();
-
-    std::cout << "Time: "
+    std::cout << "\n\nTime it took to run this program: "
               << std::chrono::duration_cast<std::chrono::microseconds>
                                           (t1 - t0).count()
               << " us.\n";

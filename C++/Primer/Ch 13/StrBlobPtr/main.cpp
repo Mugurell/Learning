@@ -2,7 +2,7 @@
 *******************************************************************************
  *
  *  Author:           Lingurar Petru-Mugurel
- *  Written:          15 Jul 2015, 21:37:34:037
+ *  Written:          18 Jul 2015, 09:32:35:959
  *  Last updated:           ---
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
@@ -14,7 +14,7 @@
  *  Execution:    ./...
  *
  *  Description:
- *  --- This is a description of what the program does ---
+ *  ---
  *
  *  Bugs:
  *  --- None ---
@@ -29,25 +29,15 @@
 ******************************************************************************/
 
 
-
 #include <iostream>
 
-#include "Sales_data.h"
-
+#include "StrBlob.h"
+#include "StrBlobPtr.h"
 
 
 int main()
 {
-    std::cout << "\nThis is just a test\n"
-              << "\nPlease enter the isbn, number of units sold and price"
-              << "\nfor book 1 : ";
-    Sales_data book1, book2;
-    std::cin >> book1;
-    std::cout << "\nNow do the same again\nfor book 2 : ";
-    std::cin >> book2;
-
-    std::cout << '\n' << book1 << '\n' << book2 << '\n' << std::endl;
-
+    std::cout << "\n\nThis is just a test.\n\n";
 
     return 0;
 }

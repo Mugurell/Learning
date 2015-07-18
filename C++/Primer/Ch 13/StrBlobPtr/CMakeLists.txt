@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(Simplified_string_class)
+project(StrBlobPtr)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
     -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow -Woverloaded-virtual \
@@ -9,6 +9,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-set(SOURCE_FILES main.cpp String.cpp)
-
-add_executable(Simplified_string_class ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp StrBlob.cpp StrBlobPtr.cpp)
+add_executable(StrBlobPtr ${SOURCE_FILES})

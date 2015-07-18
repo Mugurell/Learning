@@ -80,3 +80,12 @@ operator+(const Sales_data &lhs, const Sales_data &rhs)
     Sales_data sum = lhs;   // will use the synthesised copy-assignment operator
     return sum += rhs;
 }
+
+
+Sales_data&
+Sales_data::operator=(const std::string &isbn)
+{
+    // luckily we have a constructor that takes a string argument to call
+    *this = Sales_data(isbn);
+    return *this;
+}

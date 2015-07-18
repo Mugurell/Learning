@@ -42,7 +42,9 @@
 
 std::allocator<char> String::alloc;
 
-
+/***********************************************************************
+ * Constructors, destructors and copy/move control members
+ **********************************************************************/
 String::String(const char *charPointer)
 {
     // create a new c style string to regular chars (- not const) to work with
@@ -106,53 +108,34 @@ String& String::operator=(const String &copyFromMe)
 
 String::~String()
 {
-   // free();
+   free();
 }
 
 
-void String::free()
+
+/**************************************************************
+ * Overloaded operations
+ * Members.
+ **************************************************************/
+
+char& String::operator[](std::size_t n)
 {
-    // if our string contains at least one character
-    if (firstChar) {
-        // destroy all characters
-        //        for (auto p = pastlastChar; p != firstChar; /* empty */)
-        //            alloc.destroy(--p);
-        std::for_each(firstChar, pastlastChar,
-            [this] (char &c) { alloc.destroy(&c); } );
-        // and return the memory to freestore
-
-        alloc.deallocate(firstChar, pastlastChar - firstChar);
-    }
+    return firstChar[n];
 }
 
-// will initialize out 2 members with begin and one past the end pointers
-// to an array of pointers to chars - a string.
-void String::range_initializer(const char *begin, const char *end)
+const char& String::operator[](std::size_t n) const
 {
-    std::pair<char*, char*> newString = allocAndCopy(begin, end);
-    firstChar = newString.first;
-    pastlastChar = newString.second;
+    return firstChar[n];
 }
 
 
-std::pair<char*, char*>
-String::allocAndCopy(const char *begin, const char *end)
-{
-    // allocate exactly the needed space to accomodate the chars in range
-    char *string = alloc.allocate(end - begin);
+/**************************************************************
+ * Overloaded operations
+ * Non - Members. Friends
+ **************************************************************/
 
-    // uninitialized_copy copies elements from the input range into
-    // unconstructed, raw memory denoted by the iterator data
-    // so we'll return basically a string
-    return {string, std::uninitialized_copy(begin, end, string)};
-}
-
-
-
-/**********************************************************************
- * Output operator.
- * The input operator will be left for some other time.
- */
+// Output operator.
+// The input operator will be left for some other time.
 std::ostream&
 operator<<(std::ostream &os, const String &string)
 {
@@ -164,11 +147,9 @@ operator<<(std::ostream &os, const String &string)
 }
 
 
+// Comparison operators
+// 2 strings are equal when they have the same number of the exact same elements
 
-/***********************************************************************
- * Comparison operators
- * 2 strings are equal when they have the same number of the exact same elements
- */
 bool operator==(const String &lhs, const String &rhs)
 {
     bool equality = true;
@@ -196,16 +177,14 @@ bool operator!=(const String &lhs, const String &rhs)
 }
 
 
+// Relational operators
+// We'll compare char with char and not the size first because if the shorter
+// string has 1 element - 'z' and the longer string has 100 elements but the
+// first is 'a', then the first string will be bigger than the second.
+// Also note that one or both comparands can be nullptr. By definition, any
+// string, including the empty string (""), compares greater than a null
+// reference and two null references compare equal to each other.
 
-/***********************************************************************
- * Relational operators
- * We'll compare char with char and not the size first because if the shorter
- * string has 1 element - 'z' and the longer string has 100 elements but the
- * first is 'a', then the first string will be bigger than the second.
- * Also note that one or both comparands can be nullptr. By definition, any
- * string, including the empty string (""), compares greater than a null
- * reference and two null references compare equal to each other.
- */
 bool operator<(const String &lhs, const String &rhs)
 {
     bool is_less = false;  // will return false if both Strings are null - equal
@@ -254,10 +233,8 @@ bool operator<(const String &lhs, const String &rhs)
 }
 
 
-/*
- * This function could've delegate the above to do the checking.
- * bool operator>(const String &lhs, const String &rhs) { return rhs < lhs; }
- */
+// This function could've delegate the above to do the checking.
+// bool operator>(const String &lhs, const String &rhs) { return rhs < lhs; }
 bool operator>(const String &lhs, const String &rhs)
 {
     bool is_bigger = false; // will return false if both Strings are null -equal
@@ -299,13 +276,12 @@ bool operator>(const String &lhs, const String &rhs)
     return is_bigger;
 }
 
-/*
- * This two functions( <= and >= ) could just use the above two.
- * bool operator<=(const String &lhs, const String &rhs) { return (lhs > rhs); }
- * bool operator>=(const String &lhs, const String &rhs) { return (lhs < rhs); }
- *
- * But it's more fun to think them again :-D !! Beats Sudoku ! :-)))
- */
+
+//  This two functions( <= and >= ) could just use the above two.
+//  bool operator<=(const String &lhs, const String &rhs) { return (lhs > rhs); }
+//  bool operator>=(const String &lhs, const String &rhs) { return (lhs < rhs); }
+//
+//  But it's more fun to think them again :-D !! Beats Sudoku ! :-)))
 bool operator<=(const String &lhs, const String &rhs)
 {
     bool less_equal = true;  // will return true if both Strings are null- equal
@@ -392,3 +368,62 @@ bool operator>=(const String &lhs, const String &rhs)
 
     return bigger_equal;
 }
+
+
+
+/**************************************************************************
+ * Utilities used by the copy constructor, assignment operator, destructor
+ * Private members.
+ **************************************************************************/
+
+void String::free()
+{
+    // if our string contains at least one character
+    if (firstChar) {
+        // destroy all characters
+        //        for (auto p = pastlastChar; p != firstChar; /* empty */)
+        //            alloc.destroy(--p);
+        std::for_each(firstChar, pastlastChar,
+            [this] (char &c) { alloc.destroy(&c); } );
+        // and return the memory to freestore
+
+        alloc.deallocate(firstChar, pastlastChar - firstChar);
+    }
+}
+
+// will initialize out 2 members with begin and one past the end pointers
+// to an array of pointers to chars - a string.
+void String::range_initializer(const char *begin, const char *end)
+{
+    std::pair<char*, char*> newString = allocAndCopy(begin, end);
+    firstChar = newString.first;
+    pastlastChar = newString.second;
+}
+
+
+std::pair<char*, char*>
+String::allocAndCopy(const char *begin, const char *end)
+{
+    // allocate exactly the needed space to accomodate the chars in range
+    char *string = alloc.allocate(end - begin);
+
+    // uninitialized_copy copies elements from the input range into
+    // unconstructed, raw memory denoted by the iterator data
+    // so we'll return basically a string
+    return {string, std::uninitialized_copy(begin, end, string)};
+}
+
+
+
+/**************************************************************************
+ * Analogous functions to the ones of a stl vector
+ **************************************************************************/
+
+size_t String::size() const
+{ return pastlastChar - firstChar; }
+
+char *String::end() const
+{ return pastlastChar; }
+
+char *String::begin() const
+{ return firstChar; }

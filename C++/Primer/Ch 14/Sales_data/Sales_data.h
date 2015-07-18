@@ -17,6 +17,10 @@
  *  Exercise 14.2: Write declarations for the overloaded input, output,
  *  addition, and compound-assignment operators for Sales_data.
  *  Exercise 14.9: Define an input operator for your Sales_data class.
+ *  Exercise 14.20: Define the addition and compound-assignment operators
+ *  for your Sales_data class.
+ *  Exercise 14.22: Define a version of the assignment operator that can assign
+ *  a string representing an ISBN to a Sales_data.
  *
  *  Bugs:
  *  --- None ---
@@ -63,6 +67,9 @@ public:
 
     // compound assignment operator
     Sales_data& operator+=(const Sales_data &rhs);
+
+    // assign a string representing an ISBN to a Sales_data
+    Sales_data& operator=(const std::string &isbn);
 
     std::string isbn() const { return bookNo; }
 

@@ -5,11 +5,11 @@
 **  Written:          mari 23 iunie 2015, 18:26:55 +0300
 **  Last updated:     mari 7 iulie 2015, 21:24:09 +030
 **
-**  Compilation:  g++ -std=c++11 -Wall -Werror -Wextra -pedantic -Wshadow  
+**  Compilation:  g++ -std=c++11 -Wall -Werror -Wextra -pedantic -Wshadow
 **   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
-**                    -Wformat=2 -Wformat-nonliteral -Wmissing-declarations 
-**                    -Wmissing-format-attribute -Wmissing-include-dirs  
-**                    -Wredundant-decls -Wswitch-default -Wswitch-enum 
+**                    -Wformat=2 -Wformat-nonliteral -Wmissing-declarations
+**                    -Wmissing-format-attribute -Wmissing-include-dirs
+**                    -Wredundant-decls -Wswitch-default -Wswitch-enum
 **
 **  Execution:    ./...
 **
@@ -30,16 +30,16 @@
 **  --- None ---
 **
 **  TODO:
-**  --- None --- 
+**  --- None ---
 **
 **  Notes:
 **  We use the arrow operator to use various vector functions because
-**  data_ is a shared_ptr - so it first must be dereferenced. 
+**  data_ is a shared_ptr - so it first must be dereferenced.
 **
 **  Keep in mind that when we call const member function, this means that
 **  the data_ member will be a const shared_ptr and as shuch must point to the
 **  same vector. We cannot change the address to which it points.
-**  But the underlying vector can be changed. 
+**  But the underlying vector can be changed.
 **  As such we could have push_back() and pop_back() with a const *this.
 **  But this break the accepted convention that const member functions should
 **  not change the observable state (size(), empty()) of the objects !!!!
@@ -48,8 +48,8 @@
 ******************************************************************************/
 
 
-#ifndef STR_BLOB_
-#define STR_BLOB_
+#ifndef STRBLOBPTR_STRBLOB_H
+#define STRBLOBPTR_STRBLOB_H
 
 #include <iostream>
 #include <vector>
@@ -57,11 +57,12 @@
 #include <memory>          // shared_ptr, make_shared()
 #include <stdexcept>       // out_of_range
 
+#include "StrBlobPtr.h"
+
 
 /*
 ** Forward declaration needed for friend declaration in StrBlob
 */
-class StrBlobPtr;
 
 class StrBlob {
     friend class StrBlobPtr;
@@ -76,19 +77,13 @@ public:
     // Copy assignment operator - ex 13.26
     StrBlob& operator=(const StrBlob &received);
 
+    size_type size() const;
+    bool empty() const;
+    void push_back(const std::string &t);
+    void pop_back();
 
-// member checks 
-    size_type size() const { return data_->size(); }
-    bool empty() const { return data_->empty; }
-// add and remove elements
-    void push_back(const std::string &t) { data_->push_back(t); }
-    void pop_back() { data_->pop_back(); }
-// return StrBlobPtr to the first and one past the last elements
-    StrBlobPtr begin() { return StrBlobPtr(*this); }
-    StrBlobPtr end() {
-        auto ret = StrBlobPtr(*this, data_->size());
-        return ret;
-    } 
+    StrBlobPtr begin();
+    StrBlobPtr end();
 // element access
     std::string& front();
     const std::string& front() const;
@@ -96,69 +91,31 @@ public:
     const std::string& back() const;
 private:
     std::shared_ptr<std::vector<std::string>> data_;
-    
+
 // throws msg if data_[i] isn't valid
     void check(size_type i, const std::string &msg) const;
 };
 
+void StrBlob::pop_back()
+{ data_->pop_back(); }
 
-// the first constructor will value init a vector of strings
-// the second constructor will init the vector with a init list
-inline StrBlob::StrBlob()
-        : data_(std::make_shared<std::vector<std::string>> ()) {}
-inline StrBlob::StrBlob(std::initializer_list<std::string> il)
-        : data_(std::make_shared<std::vector<std::string>> (il)) {}
+void StrBlob::push_back(const std::string &t)
+{ data_->push_back(t); }
 
-inline StrBlob::StrBlob(const StrBlob &received) {
-    /*this->*/ data_=
-         std::make_shared<std::vector<std::string>>(*received.data_);
-}
+bool StrBlob::empty() const
+{ return data_->empty; }
 
-inline StrBlob&
-StrBlob::operator=(const StrBlob &received) {
-    /*this->*/ data_ =
-        std::make_shared<std::vector<std::string>>(*received.data_);
-        return *this;
-}
+size_type StrBlob::size() const
+{ return data_->size(); }
 
-
-
-// methods definition
-void
-inline check(size_type i, const std::string &msg) const
+StrBlobPtr StrBlob::end()
 {
-    if (i > data_->size())
-        throw std::out_of_range(msg);
+    auto ret = StrBlobPtr(*this, data_->size());
+    return ret;
 }
 
-std::string
-inline front()
-{
-// if the vector is empty, check will throw
-    check(0, "front on empty StrBlob");
-    return data_->front();
-}
-
-const std::string
-inline front() const
-{
-    check(0, "front on empty StrBlob");
-    return data_->front;
-}
-
-std::string
-inline back()
-{
-    check(0, "back on empty StrBlob");
-    return data_->back();
-}
-
-const std::string
-inline back() const
-{
-    check(0, "back on empty StrBlob");
-    return data_->back;
-}
+StrBlobPtr StrBlob::begin()
+{ return StrBlobPtr(*this); }
 
 
-#endif // STR_BLOB_
+#endif //STRBLOBPTR_STRBLOB_H

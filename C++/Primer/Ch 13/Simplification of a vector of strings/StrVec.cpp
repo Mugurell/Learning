@@ -43,6 +43,11 @@
 #include "StrVec.h"
 
 
+
+/***********************************************************************
+ * Constructors, destructor and copy/move control members
+ ***********************************************************************/
+
 // Constructor that takes an initializer list of strings, empty by default.
 StrVec::StrVec(const std::initializer_list<std::string> &stringList)
 {
@@ -116,9 +121,112 @@ StrVec::~StrVec() {
 
 
 
-// Because the memory an allocator allocates is unconstructed, we�ll use the
-// allocator�s construct member to create objects in that space when we need
-// to add an element. Similarly, when we remove an element, we�ll use the
+/**********************************************************************
+ * Overloaded operations
+ * Members.
+ **********************************************************************/
+
+StrVec&
+StrVec::operator=(std::initializer_list<std::string> il)
+{
+    std::pair<std::string*, std::string*>
+            data = allocAndCopy(il.begin(), il.end());
+    free();
+
+    firstElement = data.first;
+    firstFree = offTheEnd = data.second;
+
+    return *this;
+}
+
+std::string&
+StrVec::operator[](std::size_t n)
+{
+    return firstElement[n];
+}
+
+const std::string&
+StrVec::operator[](std::size_t n) const
+{
+    return firstElement[n];
+}
+
+
+
+/**********************************************************************
+ * Overloaded operations
+ * Non - members. Friends
+ **********************************************************************/
+
+// Comparison operations.
+// Two vectors of strings are equal when they have the same size
+// and exactly the same strings
+
+bool operator==(const StrVec &lhv, const StrVec &rhv)
+{
+    bool equality = true;
+
+    if (lhv.size() == rhv.size()) {
+        for (std::string left : lhv) {
+            for (std::string right : rhv) {
+                if (left != right) {
+                    equality = false;
+                    break;
+                }
+            }
+        }
+    }
+    else
+        equality = false;
+
+    return equality;
+}
+
+bool operator!=(const StrVec &lhv, const StrVec &rhv)
+{
+    // delegate the operator== function to do the checking
+    return !(lhv == rhv);
+}
+
+
+// Relational operations.
+// Using the same function the stl vector uses: std::lexicographical_compare.
+// Will compare each element from each vector on the same position.
+// If both sequences compare equal until one of them ends, the shorter
+// sequence is lexicographically less than the longer one.
+
+bool operator<(const StrVec &lhv, const StrVec &rhv)
+{
+    return std::lexicographical_compare(lhv.begin(), lhv.end(),
+                                        rhv.begin(), rhv.end());
+}
+
+// For the other 3 functions we'll delegate operator< to do the cheking
+bool operator>(const StrVec &lhv, const StrVec &rhv)
+{
+    return rhv < lhv;
+}
+
+bool operator<=(const StrVec &lhv, const StrVec &rhv)
+{
+    return !(rhv < lhv);
+}
+
+bool operator>=(const StrVec &lhv, const StrVec &rhv)
+{
+    return !(lhv < rhv);
+}
+
+
+
+/**************************************************************************
+ * Utilities used by the copy constructor, assignment operator, destructor
+ * Private members.
+ **************************************************************************/
+
+// Because the memory an allocator allocates is unconstructed, we'll use the
+// allocator's construct member to create objects in that space when we need
+// to add an element. Similarly, when we remove an element, we'll use the
 // destroy member to destroy the element.
 std::allocator<std::string> StrVec::alloc;
 
@@ -183,7 +291,7 @@ void StrVec::reserve(const size_t &newSize)
 
         size_t oldSize = size();
         for (size_t i = 0; i != oldSize; i++) {
-            // because we’re using the move constructor, the memory managed by
+            // because we're using the move constructor, the memory managed by
             // those strings will not be copied. Instead, each string we
             // construct will take ownership of the memory from the string to
             // which elem points.
@@ -214,10 +322,10 @@ void StrVec::reallocate()
 //    // move the data from the old memory to the new
 //    std::string *dest = newData;    // points to the next free position
 //                                    // in the new array
-//    auto elem = firstElement;     // points to the next element in the old array
+//    auto elem = firstElement;      // points to  next element in the old array
 //    size_t currentSize = size();
 //    for (size_t i = 0; i != currentSize; i++) {
-//        // because we’re using the move constructor, the memory managed by those
+//        // because we're using the move constructor,memory managed by those
 //        // strings will not be copied. Instead, each string we construct will
 //        // take ownership of the memory from the string to which elem points.
 //        alloc.construct(dest++, std::move(*elem++));
@@ -241,7 +349,7 @@ void StrVec::reallocate()
 }
 
 
-// If there isn�t room for another element, chk_n_alloc will call reallocate
+// If there isn't room for another element, chk_n_alloc will call reallocate
 // to get more space.
 void StrVec::checkAndAllocate()
 {
@@ -265,24 +373,6 @@ StrVec::allocAndCopy(const std::string *begin, const std::string *end)
     // uninitialized_copy copies elements from the input range into
     // unconstructed, raw memory denoted by the iterator data
     return {data, std::uninitialized_copy(begin, end, data)};
-}
-
-
-// The push_back function calls checkAndAllocate to ensure that there is room
-// for an element. If necessary, checkAndAllocate will call reallocate.
-// When checkAndAllocate returns, push_back knows that there is room for the new
-// element. It asks its allocator member to construct a new last element.
-void StrVec::push_back(const std::string &string)
-{
-    checkAndAllocate();     // ensure that there is room for another element
-
-    // construct a copy of string in the element to which firstFree points
-    alloc.construct(firstFree++, string);
-}
-
-void StrVec::push_back(std::string &&string) {
-    checkAndAllocate();     // reallocate the StrVec if necessary
-    alloc.construct(firstFree++, std::move(string));
 }
 
 
@@ -310,66 +400,35 @@ void StrVec::free()
 }
 
 
+/**************************************************************************
+ * Analogous functions to the ones of a stl vector
+ **************************************************************************/
 
-
-/********************************************************************
- * Comparison operators
- * Two vectors of strings are equal when they have the same size
- * and exactly the same strings
- */
-bool operator==(const StrVec &lhv, const StrVec &rhv)
+// The push_back function calls checkAndAllocate to ensure that there is room
+// for an element. If necessary, checkAndAllocate will call reallocate.
+// When checkAndAllocate returns, push_back knows that there is room for the new
+// element. It asks its allocator member to construct a new last element.
+void StrVec::push_back(const std::string &string)
 {
-    bool equality = true;
+    checkAndAllocate();     // ensure that there is room for another element
 
-    if (lhv.size() == rhv.size()) {
-        for (std::string left : lhv) {
-            for (std::string right : rhv) {
-                if (left != right) {
-                    equality = false;
-                    break;
-                }
-            }
-        }
-    }
-    else
-        equality = false;
-
-    return equality;
+    // construct a copy of string in the element to which firstFree points
+    alloc.construct(firstFree++, string);
 }
 
-bool operator!=(const StrVec &lhv, const StrVec &rhv)
-{
-    // delegate the operator== function to do the checking
-    return !(lhv == rhv);
+void StrVec::push_back(std::string &&string) {
+    checkAndAllocate();     // reallocate the StrVec if necessary
+    alloc.construct(firstFree++, std::move(string));
 }
 
+std::string *StrVec::end() const
+{ return firstFree; }
 
+std::string *StrVec::begin() const
+{ return firstElement; }
 
-/***********************************************************************
- * Relational operations
- * Using the same function the stl vector uses: std::lexicographical_compare.
- * Will compare each element from each vector on the same position.
- * If both sequences compare equal until one of them ends, the shorter
- * sequence is lexicographically less than the longer one.
- */
-bool operator<(const StrVec &lhv, const StrVec &rhv)
-{
-    return std::lexicographical_compare(lhv.begin(), lhv.end(),
-                                        rhv.begin(), rhv.end());
-}
+size_t StrVec::capacity() const
+{ return offTheEnd - firstElement; }
 
-// For the other 3 functions we'll delegate operator< to do the cheking
-bool operator>(const StrVec &lhv, const StrVec &rhv)
-{
-    return rhv < lhv;
-}
-
-bool operator<=(const StrVec &lhv, const StrVec &rhv)
-{
-    return !(rhv < lhv);
-}
-
-bool operator>=(const StrVec &lhv, const StrVec &rhv)
-{
-    return !(lhv < rhv);
-}
+size_t StrVec::size() const
+{ return firstFree - firstElement; }

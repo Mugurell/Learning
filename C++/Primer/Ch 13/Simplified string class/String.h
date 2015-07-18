@@ -23,6 +23,8 @@
  *  StrBlobPtr, StrVec, and String classes.
  *  Exercise 14.18: Define relational operators for your StrBlob,
  *  StrBlobPtr, StrVec, and String classes.
+ *  Exercise 14.26: Define subscript operators for your StrVec, String,
+ *  StrBlob, and StrBlobPtr classes.
  *
  *  Bugs:
  *  --- None ---
@@ -76,10 +78,13 @@ public:
     String& operator=(String &&moveFromMe) noexcept;
     ~String();
 
+    char& operator[](std::size_t n);
+    const char& operator[](std::size_t n) const;
+
 public:
-    char* begin() const { return firstChar; }
-    char* end() const { return pastlastChar; }
-    size_t size() const { return pastlastChar - firstChar; }
+    char * begin() const;
+    char * end() const;
+    size_t size() const;
 
 private:
     // will destroy the constructed elements and deallocate the space
@@ -87,10 +92,7 @@ private:
 
 // utilities used by the copy constructor, assignment operator and destructor
     // will allocated the needed space and copy a range of elements
-    std::pair<char*, char*>
-    allocAndCopy(const char *begin, const char *end);
-
-
+    std::pair<char*, char*> allocAndCopy(const char *begin, const char *end);
     // will initialize our String with the chars from the given range
     void range_initializer(const char *begin, const char *end);
 

@@ -25,6 +25,8 @@
 **  destructor.
 **  Exercise 13.26: Write your own version of the StrBlob class described in
 **  the previous exercise.
+**  Exercise 14.18: Define relational operators for your StrBlob,
+**  StrBlobPtr, StrVec, and String classes.
 **
 **  Bugs:
 **  --- None ---
@@ -37,7 +39,7 @@
 **  data_ is a shared_ptr - so it first must be dereferenced.
 **
 **  Keep in mind that when we call const member function, this means that
-**  the data_ member will be a const shared_ptr and as shuch must point to the
+**  the data_ member will be a const shared_ptr and as such must point to the
 **  same vector. We cannot change the address to which it points.
 **  But the underlying vector can be changed.
 **  As such we could have push_back() and pop_back() with a const *this.
@@ -57,15 +59,22 @@
 #include <memory>          // shared_ptr, make_shared()
 #include <stdexcept>       // out_of_range
 
-#include "StrBlobPtr.h"
 
 
 /*
 ** Forward declaration needed for friend declaration in StrBlob
 */
+class StrBlobPtr;
 
 class StrBlob {
     friend class StrBlobPtr;
+
+    friend bool operator< (const StrBlob &lhs, const StrBlob &rhs);
+    friend bool operator<=(const StrBlob &lhs, const StrBlob &rhs);
+    friend bool operator> (const StrBlob &lhs, const StrBlob &rhs);
+    friend bool operator>=(const StrBlob &lhs, const StrBlob &rhs);
+    friend bool operator==(const StrBlob &lhs, const StrBlob &rhs);
+    friend bool operator!=(const StrBlob &lhs, const StrBlob &rhs);
 public:
     typedef std::vector<std::string>::size_type size_type;
     StrBlob();
@@ -95,27 +104,6 @@ private:
 // throws msg if data_[i] isn't valid
     void check(size_type i, const std::string &msg) const;
 };
-
-void StrBlob::pop_back()
-{ data_->pop_back(); }
-
-void StrBlob::push_back(const std::string &t)
-{ data_->push_back(t); }
-
-bool StrBlob::empty() const
-{ return data_->empty; }
-
-size_type StrBlob::size() const
-{ return data_->size(); }
-
-StrBlobPtr StrBlob::end()
-{
-    auto ret = StrBlobPtr(*this, data_->size());
-    return ret;
-}
-
-StrBlobPtr StrBlob::begin()
-{ return StrBlobPtr(*this); }
 
 
 #endif //STRBLOBPTR_STRBLOB_H

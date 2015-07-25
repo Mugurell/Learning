@@ -14,7 +14,15 @@
 **  Execution:    ./...
 **
 **  Description:
-**  --- This is a description of what the program does ---
+**
+**  By using a weak_ptr, we don’t affect the lifetime of the vector to which a
+** given StrBlob points. However, we can prevent the user from attempting to
+** access a vector that no longer exists.
+**  Exercise 14.18: Define relational operators for your StrBlob,
+** StrBlobPtr, StrVec, and String classes.
+**  Exercise 14.27: Add increment and decrement operators to your
+** StrBlobPtr class.
+** Exercise 14.30: Add dereference and arrow operators to your StrBlobPtr class.
 **
 **  Bugs:
 **  --- None ---
@@ -22,12 +30,8 @@
 **  TODO:
 **  --- None ---
 **
-**  Expected result:
-**  --- You can write here the execution command & the expected result ---
-**
 **  Notes:
-**  --- Anything that stands out ---
-**  --- Or needs to be treated with special attention ---
+**  ---
 **
 *******************************************************************************
 ******************************************************************************/
@@ -44,16 +48,29 @@
 #include "StrBlob.h"
 
 
-class StrBlob;
 
 // StrBlobPtr throws an exception on attempts to access non-existed elements
 class StrBlobPtr {
+    friend bool operator==(const StrBlobPtr&, const StrBlobPtr&);
+    friend bool operator!=(const StrBlobPtr&, const StrBlobPtr&);
+    friend bool operator< (const StrBlobPtr&, const StrBlobPtr&);
+    friend bool operator<=(const StrBlobPtr&, const StrBlobPtr&);
+    friend bool operator> (const StrBlobPtr&, const StrBlobPtr&);
+    friend bool operator>=(const StrBlobPtr&, const StrBlobPtr&);
 public:
     StrBlobPtr() : curr_(0) {}
     StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr_(a.data_), curr_(sz) {}
 
     std::string& deref() const;
-    StrBlobPtr& incr();     // prefix version
+
+    std::string& operator*() const;
+    std::string* operator->() const;
+
+    // increment & decrement operators
+    StrBlobPtr& operator++();
+    StrBlobPtr operator++(int);
+    StrBlobPtr& operator--();
+    StrBlobPtr operator--(int);
 private:
 // check returns a shared_ptr to the vector if the check succeeds
     std::shared_ptr<std::vector<std::string>>

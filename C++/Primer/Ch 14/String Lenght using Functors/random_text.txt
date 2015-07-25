@@ -1,0 +1,86 @@
+Do tiny humans run the same as normal humans?  Not really. Why? In short, the
+problem is that big things aren’t the same as small things. Oh, sure everyone
+knows that a big hamburger is different than a small hamburger, right?
+Yes, but it’s worse than that. If you shrink down a human to a tiny size,
+running doesn’t look like a full size human. Let’s see why.
+
+Falling Ball Example
+Let’s take a ball that is dropped from a 1 meter tall stick. I know that sounds
+like it has nothing to do with running, but just hang on.
+After the ball is dropped, there is only the gravitational force on the ball
+and it will have a vertical acceleration of -g (where g = 9.8 m/s2).
+Since it has a constant acceleration, I can write the following kinematic
+equation and solve for the time it takes to hit the ground
+(the initial velocity is zero).
+With a height of 1 meter, it would take the ball 0.45 seconds to fall and hit
+the ground. Ok, now let’s make a small version of this ball and stick.
+Let’s make everything half the size.
+Dropping from just 0.5 meters, the ball would only take 0.32 seconds to hit the
+ground — which is NOT the same as 0.45 seconds. What does this have to do with
+running? Just wait.
+
+Let’s look at a slightly different example — a bouncing ball.
+Instead of an actual running person, let’s consider a ball that is both bouncing
+and moving horizontally. I can model this without too much difficulty by using
+basic ideas of projectile motion and just reverse the vertical velocity of the
+ball when it “hits” the ground. Here’s what that looks like for a ball with a
+0.5 meter radius (assume a spherical human) and a horizontal velocity
+of 2 m/s (4.5 mph).
+
+Ok, now let’s do the same thing for a small Ant-Man. Of course, he is going to
+be smaller in his small form. This also means that each step will cover less
+distance. Suppose I shrink him by a scale factor of a. In order to make his run
+look like normal sized human, I would also have to decrease his velocity by the
+same factor a. So, for a Ant-Man a tenth the size, a = 0.1 and his horizontal
+velocity would be 0.2 m/s. Oh, I would also make the spherical human smaller and
+the surface he is running on smaller by the same factor.
+If everything is smaller, shouldn’t it look the same?
+No. There is one thing that isn’t smaller — the gravitational field.
+This means that if tiny Ant-Man jumps with a lower speed, he won’t go as high
+and he won’t be off the ground for as long of a time. He is still taking hops,
+but the hops are super tiny — and yes, this is a tiny man on a tiny surface.
+Everything is scaled down.
+
+So, a tiny Ant-Man wouldn’t run like a full sized human.
+It would look really weird. Maybe this is why humans and big animals
+(like horses) run and leave the ground when they move fast. Insects just use
+multiple legs to move fast but don’t get off the ground. That’s just a guess.
+
+Oh, there is one way to make Ant-Man run in a normal looking fashion — decrease
+the gravitational field (g) by the same scale factor.
+
+
+Conclusion and Homework
+The moral of this story is that small things are not the same as big things.
+Ant-Man would run weird, but the movie seems to show him running with a lower
+vertical acceleration to make it look more like a full sized human.
+Overall, I think the Ant-Man movie (at least in this clip) found a good balance
+between small and looking like a normal human (it’s a tough thing to do).
+
+Now for some homework questions. What? You thought this was just for fun and
+there would be no homework? Wrong. It’s homework time.
+
+Yes, I know in my previous Ant-Man post I said that maybe Ant-Man doesn’t
+actually shrink at all. Maybe he just stretches into extra dimensions. Ok, that
+was just my way of explaining shrinking without changing mass.
+So, here is your question: how can you use stretching into other dimensions
+to explain how Ant-Man seems to run like a full sized human.
+This can be an essay question.
+
+Suppose Ant-Man is 11 mm tall but has the strength of a full size human.
+If his density remains constant when he shrinks, what is his mass?
+
+Using Ant-Man’s mass from above and the strength of a normal human,
+how high could he jump? Assume the same force in his legs as he jumps but he
+jumps over a shorter distance (because he is shorter).
+
+From my video analysis data, I determined that Ant-Man went from 0.19 m/s to
+2.1 m/s. If this velocity change takes just 0.167 seconds, what is the average
+force exerted on Ant-Man (use the Momentum Principle).
+
+Estimate the average force exerted on the guard during the punch.
+Use this average force to calculate the average pressure Ant-Man exerts on the
+guard’s face. Would this be enough to poke through his skin?
+
+What if Ant-Man’s mass stays constant when he shrinks? What would be the
+pressure exerted from his feet by standing on something? Would he “sink”?

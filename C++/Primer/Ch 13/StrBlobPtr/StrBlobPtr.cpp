@@ -66,13 +66,91 @@ StrBlobPtr::deref() const {
 }
 
 
-/*
-** prefix() will return a reference to the incremented object
-*/
+/*********************************************************
+** Various operators
+**********************************************************/
 StrBlobPtr&
-StrBlobPtr::incr() {
+StrBlobPtr::operator++() {
 // if curr_ already points past the end of the container, can't increment it
     check(curr_, "increment past end of StrBlobPtr");
     ++curr_;        // advance the current state
     return *this;
+}
+
+StrBlobPtr
+StrBlobPtr::operator++(int)
+{
+    StrBlobPtr ret = *this;     // save the current value to be returned
+    ++*this;        // advance one element; prefix++ checks the increment
+    return ret;     // return the copy of the saved state
+}
+
+StrBlobPtr&
+StrBlobPtr::operator--()
+{
+    // if curr_ is 0, decrementing it will yield an invalid subscript
+    --curr_;     // move the current state back one element
+    check(curr_, "decrement past begin of StrBloPtr");
+    return *this;
+}
+
+StrBlobPtr
+StrBlobPtr::operator--(int)
+{
+    StrBlobPtr ret = *this;     // save the current value to be returned
+    --*this;       // move backward one element; prefix -- checks the decrement
+    return ret;    // return the saved state
+}
+
+
+
+bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr_ == rhs.curr_;
+}
+
+bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return !(lhs == rhs);
+}
+
+bool operator< (const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr_ < rhs.curr_;
+}
+
+bool operator<=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr_ <= rhs.curr_;
+}
+
+bool operator> (const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr_ > rhs.curr_;
+}
+
+bool operator>=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return lhs.curr_ >= rhs.curr_;
+}
+
+
+// The dereference operator checks that curr is still in range and, if so,
+// returns a reference to the element denoted by curr.
+std::string&
+StrBlobPtr::operator*() const
+{
+    //std::shared_ptr<std::vector<std::string>>
+      auto      p = check(curr_, "dereference past end");
+    return (*p)[curr_];     // *(p) is the vector to which this object
+    // points
+}
+
+// The arrow operator avoids doing any work of its own by calling the
+// dereference operator and returning the address of the element
+// returned by that operator.
+std::string*
+StrBlobPtr::operator->() const
+{
+    return & this->operator*();
 }

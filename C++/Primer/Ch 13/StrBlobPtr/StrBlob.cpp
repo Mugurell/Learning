@@ -31,6 +31,7 @@
 
 
 #include "StrBlob.h"
+#include "StrBlobPtr.h"
 
 
 // The first constructor will value initialize a vector of strings.
@@ -72,7 +73,7 @@ const std::string&
 StrBlob::front() const
 {
     check(0, "front on empty StrBlob");
-    return data_->front;
+    return data_->front();
 }
 
 std::string&
@@ -86,7 +87,7 @@ const std::string&
 StrBlob::back() const
 {
     check(0, "back on empty StrBlob");
-    return data_->back;
+    return data_->back();
 }
 
 
@@ -97,9 +98,12 @@ void StrBlob::push_back(const std::string &t)
 { data_->push_back(t); }
 
 bool StrBlob::empty() const
-{ return data_->empty; }
+{
+    return data_->empty();
+}
 
-size_type StrBlob::size() const
+StrBlob::size_type
+StrBlob::size() const
 { return data_->size(); }
 
 StrBlobPtr StrBlob::end()
@@ -110,3 +114,39 @@ StrBlobPtr StrBlob::end()
 
 StrBlobPtr StrBlob::begin()
 { return StrBlobPtr(*this); }
+
+
+/******************************************************
+** Various operators
+******************************************************/
+bool operator==(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return lhs.data_ == rhs.data_;
+}
+
+bool operator!=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return lhs.data_ != rhs.data_;
+}
+
+bool operator<(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return std::lexicographical_compare
+                (lhs.data_->begin(), lhs.data_->end(),
+                 rhs.data_->begin(), rhs.data_->end());
+}
+
+bool operator>(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return rhs < lhs;
+}
+
+bool operator<=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return !(rhs < lhs);
+}
+
+bool operator>=(const StrBlob &lhs, const StrBlob &rhs)
+{
+    return !(lhs < rhs);
+}

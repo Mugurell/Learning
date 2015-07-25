@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(StrBlobPtr)
+project(Simple_Calculator_using_Function_Table)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
     -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow -Woverloaded-virtual \
@@ -9,6 +9,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-set(SOURCE_FILES main.cpp StrBlob.cpp StrBlobPtr.cpp)
-
-add_executable(StrBlobPtr ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp Functions.cpp)
+add_executable(Simple_Calculator_using_Function_Table ${SOURCE_FILES})

@@ -31,10 +31,7 @@
 
 
 #include <iostream>
-<<<<<<< HEAD
 #include <string>
-=======
->>>>>>> origin/pre
 
 #include "Functions.h"
 

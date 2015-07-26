@@ -45,8 +45,10 @@
 
 // predefine a functor to be used in our functions table
 struct Divide {
-    double operator() (const float &denominator, const float &divisor) {
-        return denominator / divisor;
+    double operator() (const double &denominator, const double &divisor) {
+        double result = denominator / divisor;
+        return result;
+       // return denominator / divisor;
     }
 };
 

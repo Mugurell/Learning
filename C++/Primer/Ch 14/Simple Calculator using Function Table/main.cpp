@@ -32,6 +32,8 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>      // both iomanip and limits needed for printing the
+#include <limits>       // result - which is a double with full precision
 
 #include "Functions.h"
 
@@ -62,7 +64,7 @@ int main()
                 Functions::decrypt_gibberish(terminal_line, nr1, nr2);
 
         if (operation == "Q") {
-            std::cout << "\n\tSo this is it?\nBye!\n\n";
+            std::cout << "\n\tSo this is it?\n\tBye!\n\n";
             break;
         }
 
@@ -70,7 +72,12 @@ int main()
             operation == "*" || operation == "%")
         {
             double result = Functions::math[operation](nr1, nr2);
-            std::cout << "\n\t" << nr1 << ' ' << operation << ' ' << nr2
+            //printf("\n\t%d %s %d = %.15Lf\n\n", nr1, operation, nr2, result);
+            std::cout <<
+                    // set the precision for cout to be the one needed for
+                    // doubles and + 1 because of rounding errors when printing
+                    std::setprecision(std::numeric_limits<double>::digits10 + 1)
+                      << "\n\t" << nr1 << ' ' << operation << ' ' << nr2
                       << " = " << result << ".\n\n";
         }
         else if (operation == "gibberish") {

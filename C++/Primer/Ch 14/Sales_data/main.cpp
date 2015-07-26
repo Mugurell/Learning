@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          15 Jul 2015, 21:37:34:037
- *  Last updated:           ---
+ *  Last updated:     26 Jul 2015, 16:36:27:591
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -47,6 +47,11 @@ int main()
     std::cin >> book2;
 
     std::cout << '\n' << book1 << '\n' << book2 << '\n' << std::endl;
+
+    // static_cast needed because our conversion operators are explicit
+    std::cout << "\n\tSo book1 did:  " << static_cast<double>(book1)
+              << "\n\tand book2 did: " << static_cast<double>(book2)
+              << "\n\nNice!\n\n";
 
 
     return 0;

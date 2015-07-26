@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          15 Jul 2015, 21:44:02:011
- *  Last updated:           ---
+ *  Last updated:     26 Jul 2015, 16:36:25:498
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -21,6 +21,9 @@
  *  for your Sales_data class.
  *  Exercise 14.22: Define a version of the assignment operator that can assign
  *  a string representing an ISBN to a Sales_data.
+ *  Exercise 14.45: Write conversion operators to convert a Sales_data to string
+ *  and to double. What values do you think these operators should return?
+ *
  *
  *  Bugs:
  *  --- None ---
@@ -70,6 +73,11 @@ public:
 
     // assign a string representing an ISBN to a Sales_data
     Sales_data& operator=(const std::string &isbn);
+
+    // conversion operators
+    // explicit because we don't want them be called by mistake.
+    explicit operator std::string() const { return bookNo; };
+    explicit operator double() const { return revenue; };
 
     std::string isbn() const { return bookNo; }
 

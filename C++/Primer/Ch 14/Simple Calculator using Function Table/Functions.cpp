@@ -32,7 +32,6 @@
 *******************************************************************************/
 
 
-#include <cctype>       // ::isspace()
 #include <iterator>     // std::next()
 
 #include "Functions.h"
@@ -53,6 +52,7 @@ std::string
 Functions::decrypt_gibberish(const std::string &gibberish, int &nr1, int &nr2)
 {
     std::string operation;  // will hold the decrypted user choice
+    std::string possible_operations;
     bool no1 = false,       // decrypted the first operand
          no2 = false,       // decrypted the second operand
          op = false;        // decrypted the math operation user wanted
@@ -70,16 +70,19 @@ Functions::decrypt_gibberish(const std::string &gibberish, int &nr1, int &nr2)
             break;
         }
         // 2) Try to decrypt a math operation
+        // get the first operand
         if (::isdigit(*curr) && !no1 && !no2) {
             (nr1 *= 10) += *curr - '0';    // convert ascii char to ascii number
-            if (!isdigit(*(curr+1)))
+            if (((curr+1)) == gibberish.end() || !::isdigit(*(curr+1)))
                 no1 = true;
         }
+        // get the math operation, which should be a char between the operands
         else if (::isdigit(*curr) && no1 && !no2) {
             (nr2 *= 10) += *curr - '0';    // convert ascii char to ascii number
             if (((curr+1)) == gibberish.end() || !::isdigit(*(curr+1)))
                 no2 = true;
         }
+        // get the second operand
         else if ((*curr == '+' || *curr == '-' || *curr == '/'
                  || *curr == '*' || *curr == '%') && !op && no1 && !no2) {
             operation = *curr;
@@ -88,10 +91,12 @@ Functions::decrypt_gibberish(const std::string &gibberish, int &nr1, int &nr2)
         else if (::isspace(*curr)) {   // skip any leading whitespaces
             continue;
         }
-        // If all of the above failed user probably entered gibberish.
-        else
-            operation = "gibberish";
     }
+
+    // 3) If the checks above failed the user either not respected the math
+    // operations format, or he entered gibberish
+    if (!(no1 && op && no2))
+        operation = "gibberish";
 
     return operation;
 }

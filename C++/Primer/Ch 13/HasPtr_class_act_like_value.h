@@ -187,8 +187,7 @@ HasPtr::operator<(const HasPtr &rightOperand) const {
     }
     // if the first element in leftOperand is equivalent to the first element
     // in rightOperand test if the second element has a lesser value.
-    else if(!(*ps > *rightOperand.ps)
-            && (i < rightOperand.i)) {
+    else if(!(*ps > *rightOperand.ps) && (i < rightOperand.i)) {
         return true;
     } 
     // if the above checks failed means that we have at least 

@@ -3,7 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          09 Jul 2015, 21:29:38:349
- *  Last updated:     10 Jul 2015, 17:53:26:095
+ *  Last updated:     17 Jul 2015, 16:15:39:956
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow
  *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
@@ -20,6 +20,12 @@
  *  reserve, capacity, and resize.
  *  Exercise 13.40: Add a constructor that takes an initializer_list<string> to
  *  your StrVec class.
+ *  Exercise 14.16: Define equality and inequality operators for your StrBlob,
+ *  StrBlobPtr, StrVec, and String classes.
+ *  Exercise 14.18: Define relational operators for your StrBlob,
+ *  StrBlobPtr, StrVec, and String classes.
+ *  Exercise 14.26: Define subscript operators for your StrVec, String,
+ *  StrBlob, and StrBlobPtr classes.
  *
  *  Bugs:
  *  --- None ---
@@ -45,6 +51,13 @@
 
 
 class StrVec {
+    friend bool operator==(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator!=(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator<(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator>(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator<=(const StrVec &lhv, const StrVec &rhv);
+    friend bool operator>=(const StrVec &lhv, const StrVec &rhv);
+
 public:
     StrVec()    // the allocator member will be default initialized
         : firstElement(nullptr), firstFree(nullptr), offTheEnd(nullptr) { }
@@ -57,28 +70,24 @@ public:
     StrVec& operator=(StrVec &&moveFromMe) noexcept;
     ~StrVec();
 
+    // overloaded assignment operator
+    StrVec& operator=(std::initializer_list<std::string> il);
+    const std::string& operator[](std::size_t n) const;
+    std::string& operator[](std::size_t n);
+
+
 // some public methods analogous to the ones of a std::vector
     // used to construct another element at *firstFree
     void push_back(const std::string&);     // copy the element
     void push_back(std::string &&);         // move the element
-
-    // returns the number of elements actually in use
-    size_t size() const { return firstFree - firstElement; }
-
-    // returns the number of elements that the StrVec can hold
-    size_t capacity() const { return offTheEnd - firstElement; }
-
+    size_t size() const;
+    size_t capacity() const;
     // allocate space for at least n elements - newSize.
     void reserve(const size_t &newSize);
-
     // resize the container so that it contains exactly the requested elements
     void resize(const size_t &newSize);
-
-    // returns a pointer to the first constructed element
-    std::string *begin() const { return firstElement; }
-
-    // returns a pointer to one past the last constructed element
-    std::string *end() const { return firstFree; }
+    std::string * begin() const;
+    std::string * end() const;
 
 private:
     // will ensure that there is room to add at least one element
@@ -88,10 +97,8 @@ private:
     // will allocate space and copy a given range of elements
     std::pair<std::string*, std::string*> allocAndCopy
             (const std::string *begin, const std::string *end);
-
     // will destroy the constructed elements and deallocate the space.
     void free();
-
     // will reallocate the StrVec when it runs out of space.
     void reallocate();
 
@@ -104,6 +111,7 @@ private:
     std::string *firstFree;    // pointer to the first free element in the array
     std::string *offTheEnd;    // pointer to one past the end of the array
 };
+
 
 
 #endif //SIMPLIFICATION_OF_A_VECTOR_OF_STRINGS_STRVEC_H

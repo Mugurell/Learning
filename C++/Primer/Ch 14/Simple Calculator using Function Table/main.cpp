@@ -72,7 +72,6 @@ int main()
             operation == "*" || operation == "%")
         {
             double result = Functions::math[operation](nr1, nr2);
-            //printf("\n\t%d %s %d = %.15Lf\n\n", nr1, operation, nr2, result);
             std::cout <<
                     // set the precision for cout to be the one needed for
                     // doubles and + 1 because of rounding errors when printing

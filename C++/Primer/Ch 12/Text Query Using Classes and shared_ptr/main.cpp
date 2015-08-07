@@ -27,12 +27,9 @@
  *  TODO:
  *  --- None ---
  *
- *  Expected result:
- *  --- You can write here the execution command & the expected result ---
  *
  *  Notes:
- *  --- Anything that stands out ---
- *  --- Or needs to be treated with special attention ---
+ *  ---
  *
 *******************************************************************************
 ******************************************************************************/

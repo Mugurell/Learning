@@ -54,6 +54,7 @@
 
 class QueryResult {
 friend std::ostream& print(std::ostream&, const QueryResult&);
+
 public:
     // type for the numbers of the lines in which the searched word occurs
     typedef StrVec::size_type lineNo;
@@ -66,6 +67,7 @@ public:
     // smart pointers to manage dynamic memory, we'll want to prevent copying
     QueryResult(const QueryResult&) = default;      // see Notes
     QueryResult& operator=(const QueryResult&) = delete;
+
 private:
     std::string searchedWord;           // word this query represents
     std::shared_ptr<std::set<lineNo>> lineNumber;    // lines it's on

@@ -76,6 +76,7 @@ public:
     // will return a QueryResult representing the lines on which
     // searchedWord appears.
     QueryResult query(const std::string& searchedWord) const;
+
 private:
     std::shared_ptr<StrVec>
             inputFileText;  // will hold all the text read line by line from

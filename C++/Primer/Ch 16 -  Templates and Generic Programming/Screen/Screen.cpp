@@ -2,7 +2,7 @@
 ********************************************************************************
  *
  *  Author:           Lingurar Petru-Mugurel
- *  Written:          11 Aug 2015, 13:25:05:602
+ *  Written:          17-Aug-15, 09:59 PM
  *  Last updated:           ---
  *
  *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
@@ -12,36 +12,44 @@
  *                    -Wredundant-decls -Wswitch-default -Wswitch-enum 
  *
  *  Description:
- *  Exercise 16.12: Write your own version of the Blob and BlobPtr templates
- *  including the various const members that were not shown in the text.
+ *  ---
  *
  *  Bugs:
  *  --- None ---
  *
- *  TODO:
- *  --- None --- 
+ *  TODO: Recisteste treaba cu friendship la templateuri ca sa vezi cum
+ *  aplici aici in cazurile operatorilor.
  *
  *  Notes:
- *  Like StrBlob, our template will provide shared (and checked) access to the
- *  elements it holds. Unlike that class, our template can be used on elements
- *  of pretty much any type. As with the library containers, users will have
- *  to specify the element type when they use a Blob.
+ *  --- 
  *
 ********************************************************************************
 *******************************************************************************/
 
 
 
-#include <iostream>
-
-#include "Blob.h"
+#include "Screen.h"
 
 
-int main()
+// move the cursor to the given "coordinates"
+template <std::size_t H, std::size_t W>
+inline Screen<H, W>& Screen<H, W>::move_at(pos h, pos w)
 {
-    Blob<int> numbers {2, 4, 6, 8};
+    pos row = width * h;
+    cursor = row + w;
 
-    std::cout << "\nThe " << numbers.size() << "th element from our vector"
-              << " is " << numbers.back() << ".\n\n";
-    return 0;
+    return *this;
 }
+
+
+std::istream& operator>>(std::istream &is, Screen &new_screen)
+{
+    char ch;
+    is >> ch;
+    std::string temp(Screen<H, W>height * Screen::width, ch);
+    new_screen.contents = temp;
+
+    return is;
+}
+
+

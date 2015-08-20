@@ -41,8 +41,20 @@
 #include <vector>
 
 
+// forward declarations
+template <typename> class BlobPtr;
+template <typename> class Blob;     // needed for parameters in operator==
+template <typename T> bool operator==(const Blob<T>&, const Blob<T>&);
+
+
 template<typename T>
 class Blob {
+    // The friend declarations use Blob’s template parameter as their own.
+    // Thus, the friendship is restricted to those instantiations of BlobPtr
+    // and the equality operator that are instantiated with the same type.
+    friend class BlobPtr<T>;
+    friend bool operator==<T>(const Blob<T>&, const Blob<T>&);
+
 public:
     typedef T value_type;
     typedef typename std::vector<T>::size_type size_type;
@@ -53,7 +65,7 @@ public:
 
     // number of elements in the Blob
     size_type size()  const { return data->size(); }
-    bool      empty() const { return data->empty(); }
+    bool     empty() const { return data->empty(); }
 
     // and and remove elements
     void push_back(const T &t)  const { data->push_back(t); }

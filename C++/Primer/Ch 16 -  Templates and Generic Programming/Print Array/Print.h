@@ -44,7 +44,7 @@
 // the nontype parameter will hold the size of the array
 template<typename T, unsigned Size>
 void Print(const T (&arr)[Size]);       // parenthesized the name because
-                                        // don't want an array of references ;-)
+                                        // don't want an array of references 
 
 
 template<typename T>

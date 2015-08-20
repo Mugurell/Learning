@@ -35,8 +35,8 @@
 
 
 #include <stdexcept>
-#include <memory>
-#include <vector>
+
+
 
 // constructors
 // Allocates an empty vector and stores the pointer to that vector in data.
@@ -97,5 +97,10 @@ inline void Blob<T>::pop_back()
 }
 
 
-
+// definition for the friend operator==
+template <typename T>
+operator==(const Blob &lhs, const Blob &rhs)
+{
+    return lhs.data == rhs.data;
+}
 

@@ -12,7 +12,7 @@
  *                    -Wredundant-decls -Wswitch-default -Wswitch-enum 
  *
  *  Description:
- *  Exercise 16.5: Write a template version of the print function from ง 6.2.4
+ *  Exercise 16.5: Write a template version of the print function from ยง 6.2.4
  *  (p. 217) that takes a reference to an array and can handle arrays of any
  *  size and any element type.
  *
@@ -54,3 +54,5 @@ void Print2(const T &array);
 #include "Print.tpp"
 
 #endif //PRINT_ARRAY_PRINT_H
+
+

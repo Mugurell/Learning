@@ -3,13 +3,7 @@
  *
  *  Author:           Lingurar Petru-Mugurel
  *  Written:          17-Aug-15, 09:59 PM
- *  Last updated:           ---
- *
- *  Compilation:  g++ -std=c++14 -Wall -Werror -Wextra -pedantic -Wshadow  
- *   (g++ 5.1)        -Woverloaded-virtual -Winvalid-pch -Wcast-align
- *                    -Wformat=2 -Wformat-nonliteral -Wmissing-declarations 
- *                    -Wmissing-format-attribute -Wmissing-include-dirs  
- *                    -Wredundant-decls -Wswitch-default -Wswitch-enum 
+ *  Last updated:     21 Aug 2015  20:11:07
  *
  *  Description:
  *  Exercise 16.14: Write a Screen class template that uses nontype parameters
@@ -23,10 +17,11 @@
  *  --- None ---
  *
  *  TODO:
- *  --- None --- 
+ *  --- None ---
  *
  *  Notes:
- *  --- 
+ *  About declaring the overloaded operators as templates or not, see
+ *  http://stackoverflow.com/questions/13932088/
  *
 ********************************************************************************
 *******************************************************************************/
@@ -42,33 +37,54 @@
 #include <string>
 
 
-template <size_t H, size_t W>
-class Screen {
-    // fill the screen with a character read from cin
-    friend std::istream& operator>>(std::istream&, Screen &);
+/**
+ * Forward declarations needed for to declare the overloaded i/o operators
+ * without declaring it as a function template in the class body
+ */
+template<std::size_t H, std::size_t W> class Screen;
+template<std::size_t T1, std::size_t T2>
+std::ostream& operator<<(std::ostream&, const Screen<T1, T2>&);
+template<std::size_t T1, std::size_t T2>
+std::istream& operator>>(std::istream&, Screen < T1, T2>&);
 
-    // print each row
-    friend std::ostream& operator<<(std::ostream&, const Screen&);
 
-public:
-    using pos = std::string::size_type;
+template<std::size_t H, std::size_t W>
+class Screen
+{
+    /**
+     * This would be the correct way to befriend the i/o operators
+     * .. If I didn't use the forward declaration method..
+     */
+    //template<std::size_t T1, std::size_t T2> 
+    //friend ostream& operator<< (ostream &, Screen<T1, T2>&);
+    //template<std::size_t T1, std::size_t T2>
+    // friend istream& operator>>(istream&, Screen<T1, T2>&);
 
-    Screen() = default;
-    Screen(H, W, pos c = 0, char ch = '*')
-        : height(H), width(W), cursor(c), contents(H * W, ch) { }
-
-    char get() const { return contents.at(cursor)};
-
-    // move the cursor at a new position
-    Screen& move_at(pos h, pos w);
+    friend std::istream& operator>> <> (std::istream&, Screen&);
+    friend std::ostream& operator<< <> (std::ostream&, const Screen&);
 
 private:
-    pos cursor = 0;
+    using pos = std::string::size_type;
+
     pos height = 0;
     pos width = 0;
+    pos cursor = 0;
     std::string contents;
+
+public:
+    // Screen() = default;  
+
+    // a constructor which init all members is a default one
+    Screen(char ch = '*') : height(H), width(W), contents(H * W, ch) { }
+
+    // get the symbol at the current cursor position
+    char get() const { return contents.at(cursor); }
+
+    // move the cursor at the indicated position
+    Screen& move_at(pos l, pos w);
 };
 
 
+#include "Screen.tpp"
 
 #endif //SCREEN_SCREEN_H

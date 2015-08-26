@@ -12,7 +12,8 @@
  *                    -Wredundant-decls -Wswitch-default -Wswitch-enum 
  *
  *  Description:
- *  ---
+ *  Exercise 16.24: Add a constructor that takes two iterators to your Blob
+ *  template.
  *
  *  Bugs:
  *  --- None ---
@@ -62,6 +63,9 @@ public:
     // constructors
     Blob();
     Blob(std::initializer_list<T> il);
+    // initialize the underlying vector of the data shared_ptr
+    // from a pair of iterators
+    Blob(T *it1, T *it2);
 
     // number of elements in the Blob
     size_type size()  const { return data->size(); }

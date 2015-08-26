@@ -49,6 +49,11 @@ inline Blob<T>::Blob(std::initializer_list<T> il) :
         data(std::make_shared<std::vector<T>>(il)) { }
 
 
+template<typename T>
+inline Blob<T>::Blob(T *beg, T *end) :
+        data(std::make_shared<std::vector<T>>(beg, end)) { }
+
+
 // helper function used to check if the subscript (i) is valid for our Blob
 template <typename T>
 inline void Blob<T>::check(size_type i, const std::string &msg) const
@@ -56,7 +61,6 @@ inline void Blob<T>::check(size_type i, const std::string &msg) const
     if (i >= data->size())
         throw std::out_of_range(msg);
 }
-
 
 // element access
 template <typename T>
@@ -99,7 +103,7 @@ inline void Blob<T>::pop_back()
 
 // definition for the friend operator==
 template <typename T>
-operator==(const Blob &lhs, const Blob &rhs)
+operator==(const Blob<T> &lhs, const Blob<T> &rhs)
 {
     return lhs.data == rhs.data;
 }

@@ -1,0 +1,1 @@
+SlimRoms intends to open source everything their system admins build in the process of maintaining Slim’s infrastructure: build scripts, jenkins/gerrit plugins, config files, health checkers, website, deployment tools, etc. This can be a great learning resource or a source of inspiration for the curious.

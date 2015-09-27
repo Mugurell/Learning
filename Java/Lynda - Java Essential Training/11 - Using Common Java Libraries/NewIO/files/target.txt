@@ -1,0 +1,2 @@
+A constructor is a bit of code that takes raw memory and turns it into object.
+This means you have to have exactly the right amount of memory available.

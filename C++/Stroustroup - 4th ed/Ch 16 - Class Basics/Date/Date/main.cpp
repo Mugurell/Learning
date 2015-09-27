@@ -20,6 +20,8 @@
 
 
 #include <iostream>
+#include <string>
+
 #include "Chrono.h"
 
 
@@ -30,5 +32,7 @@ int main()
     Chrono::Date user_date;
     std::cin >> user_date;
 
-    if (user_date.day)
+    std::cout << "\nCool!\nSo you've entered\n\t";
+    std::cout << user_date;
+
 }

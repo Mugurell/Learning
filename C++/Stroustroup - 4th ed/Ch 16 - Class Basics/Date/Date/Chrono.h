@@ -26,6 +26,7 @@
 
 namespace Chrono
 {
+    // as an enum class, it will not support implicit conversions!
     enum class Month : unsigned short
     {
         Jan = 1, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
@@ -34,16 +35,19 @@ namespace Chrono
 
     class Date
     {
+        friend std::istream& operator>>(std::istream &is, Date &d);
     public:
         class Bad_date {};      // exception class
 
-        // the default obtained will be 0, 0, 0 - not a valid date
-        explicit Date(int dd = {}, Month mm = {}, int yy = {});
+        // the default obtained will be 0, Jan, 0 - not a valid date
+        // used Month::Jan because 0 as a month is undefined,
+        // it doesnt exist in the Month enum
+        explicit Date(int dd = {}, Month mm = Month::Jan, int yy = {});
 
     // nonmodifying functions for examining the Date:
-        int   day()   const;
-        Month month() const;
-        int   year()  const;
+        int   day()  const { return d; }
+        int month()  const { return m; }
+        int  year()  const { return y; }
 
         std::string string_rep() const;         // string representation
         void char_rep(char *s, int max) const;  // C-style string representation
@@ -53,20 +57,17 @@ namespace Chrono
         Date& add_month(int n);
         Date& add_day  (int n);
 
+        static void set_default(int dd, int mm, int yy);
+
     private:
-        bool is_valid();    // check if this Date represents a date
-        int d, m, y;        // representation
+        bool is_valid();                // check if this Date represents a date
+        bool is_leap_year();
+        int d, m, y;                    // representation
     };
 
-    bool is_date(int d, Month m, int y);    // true for valid date
-    bool is_leapyear(int y);                
+    std::ostream& operator<<(std::ostream &os, const Date &d);
 
     bool operator==(const Date &a, const Date &b);
     bool operator!=(const Date &a, const Date &b);
-
-    const Date& default_date();     // the default date
-
-    std::ostream& operator<<(std::ostream &os, const Date &d);
-    std::istream& operator>>(std::istream &is, const Date &d);
 
 }

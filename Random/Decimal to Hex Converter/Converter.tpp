@@ -50,17 +50,17 @@ Converter<T>::Converter(const T& dec) : decimal{dec}
 
 template <typename T>
 std::map<std::string, char>
-Converter<T>::bin_hex_map { {"0000", '0'}, { "0001", '1'}, {"0010", '2'},
-                         {"0011", '3'}, {"0100", '4'}, {"0101", '5'},
-                         {"0110", '6'}, {"0111", '7'}, {"1000", '8'},
-                         {"1001", '9'}, {"1010", 'A'}, {"1011", 'B'},
-                         {"1100", 'C'}, {"1101", 'D'}, {"1110", 'E'},
-                         {"1111", 'F'}
-                       };
+    Converter<T>::bin_hex_map { {"0000", '0'}, { "0001", '1'}, {"0010", '2'},
+                                {"0011", '3'}, {"0100", '4'}, {"0101", '5'},
+                                {"0110", '6'}, {"0111", '7'}, {"1000", '8'},
+                                {"1001", '9'}, {"1010", 'A'}, {"1011", 'B'},
+                                {"1100", 'C'}, {"1101", 'D'}, {"1110", 'E'},
+                                {"1111", 'F'}
+};
 
 template <typename T>
 std::string
-Converter<T>::hex_values {"0123456789ABCDEF"};
+    Converter<T>::hex_values {"0123456789ABCDEF"};
 
 
 template <typename T>
@@ -133,7 +133,6 @@ void Converter<T>::decimalToBinary()
         }
     }
     else {
-        //short position{0};
         while (count-- > 0)
         {
             char current_bit_value = (binary_bits & 1 << count ? 1 : 0);
@@ -154,11 +153,11 @@ void Converter<T>::decimalToHex()
         // Read the binary representation string, in 4 character groups -
         // corresponding to each hex symbol
         for (std::string::const_iterator it= binary_representation.cbegin();
-            it != binary_representation.cend(); it += 4)
+             it != binary_representation.cend(); it += 4)
         {
             // add each hex representation for each 4 bits values
             hex_representation.push_back(bin_hex_map.at
-                                               (std::string(it, it + 4)));
+                (std::string(it, it + 4)));
         }
     }
 
@@ -173,6 +172,7 @@ void Converter<T>::decimalToHex()
                                       hex_values.at(number % 16));
             number /= 16;
         }
+        // Pad the hex representation with "0x".
         hex_representation.insert(hex_representation.begin(), {'0', 'x'});
     }
 }
